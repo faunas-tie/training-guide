@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en-AU" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#13161b">
+<title>W27 Full Body &mdash; Mon 29 Jun</title>
+<script>
+(function(){var t='dark';try{var s=localStorage.getItem('c2s-theme');var sys=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';t=(s==='light'||s==='dark')?s:sys;}catch(e){}document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='light'?'#f3f4f7':'#13161b');})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,800;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#13161b; --bg2:#181c23; --panel:#1d222b; --panel2:#232934;
+    --line:#2c3441; --ink:#eef2f6; --ink2:#b4bdc9; --ink3:#7c8794;
+    --str:#a98bff; --accent:#ff7a2f; --easy:#27c4ad; --hard:#ff5a5f; --warn:#ffb43d;
+    --shadow:0 8px 28px rgba(0,0,0,.45);
+    --header-bg:linear-gradient(135deg,#1b2029,#15191f);
+    --header-stripe:rgba(255,255,255,.018);
+    --pill-bg:rgba(255,255,255,.04);
+    --tint:rgba(255,255,255,.04); --tint-hover:rgba(255,255,255,.06);
+    --str-soft:rgba(169,139,255,.12); --str-line:rgba(169,139,255,.3);
+  }
+  html[data-theme="light"]{
+    --bg:#f3f4f7; --bg2:#eaecf0; --panel:#ffffff; --panel2:#eef0f4;
+    --line:#d2d6df; --ink:#181b22; --ink2:#454f5d; --ink3:#69727f;
+    --str:#5f33bd; --accent:#c2570f; --easy:#0b7e6f; --hard:#cf2e34; --warn:#946010;
+    --shadow:0 6px 20px rgba(20,28,40,.10);
+    --header-bg:linear-gradient(135deg,#ffffff,#eef1f6);
+    --header-stripe:rgba(20,28,40,.03);
+    --pill-bg:rgba(20,28,40,.035);
+    --tint:rgba(20,28,40,.035); --tint-hover:rgba(20,28,40,.06);
+    --str-soft:rgba(95,51,189,.10); --str-line:rgba(95,51,189,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);font-family:"Hanken Grotesk",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.55;transition:background-color .3s ease,color .3s ease}
+  .wrap{max-width:760px;margin:0 auto;padding:14px 16px calc(96px + env(safe-area-inset-bottom));
+    padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+
+  /* ---- top control bar ---- */
+  .ctl{display:flex;justify-content:flex-end;margin-bottom:10px}
+  .tbtn{font-family:"DM Mono";font-size:11px;letter-spacing:.08em;color:var(--ink2);
+    background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    padding:8px 14px;min-height:38px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .tbtn:hover{border-color:var(--ink3)}
+  .tbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .tbtn .ic{font-size:13px;line-height:1}
+
+  /* ---- header ---- */
+  .sess-header{border:1px solid var(--line);border-radius:18px;background:var(--header-bg);
+    border-top:4px solid var(--str);padding:24px 22px 20px;margin-bottom:18px;
+    position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .sess-header:before{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(115deg,var(--header-stripe) 0 2px,transparent 2px 26px);
+    pointer-events:none}
+  .kicker{font-family:"DM Mono",monospace;letter-spacing:.28em;text-transform:uppercase;
+    font-size:10.5px;color:var(--str);margin-bottom:7px}
+  h1{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:clamp(40px,11vw,60px);
+    line-height:.9;letter-spacing:.01em}
+  h1 .dim{color:var(--ink3)}
+  .when{color:var(--ink2);font-size:14px;margin-top:9px}
+  .when b{color:var(--ink)}
+  .sess-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .pill{display:flex;flex-direction:column;gap:1px;background:var(--pill-bg);
+    border:1px solid var(--line);border-radius:11px;padding:8px 13px;min-width:74px;flex:1 0 auto}
+  .pill .n{font-family:"Bebas Neue";font-size:24px;line-height:1;color:var(--ink)}
+  .pill .l{font-family:"DM Mono";font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+
+  /* ---- section labels ---- */
+  .section-label{font-family:"DM Mono";font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink3);margin:26px 0 10px;display:flex;align-items:center;gap:10px}
+  .section-label:after{content:"";flex:1;height:1px;background:var(--line)}
+
+  /* ---- cards ---- */
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px;margin-bottom:13px;box-shadow:var(--shadow)}
+  .card.wu{border-top:3px solid var(--easy)}
+  .card.ex{border-top:3px solid var(--str)}
+  .card.cd{border-top:3px solid var(--easy)}
+  .card.new-machine{border-top:3px solid var(--accent)}
+
+  /* ---- exercise header ---- */
+  .ex-header{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:12px}
+  .ex-num{font-family:"DM Mono";font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--str);background:var(--str-soft);border:1px solid var(--str-line);
+    border-radius:6px;padding:3px 8px}
+  .ex-title{font-family:"Bebas Neue";font-weight:400;font-size:28px;line-height:1;letter-spacing:.02em}
+  .ex-spec{font-family:"DM Mono";font-size:12px;color:var(--ink2);margin-top:3px;line-height:1.5}
+
+  .what{font-size:14.5px;color:var(--ink2);border-left:3px solid var(--line);
+    padding:4px 0 4px 13px;margin-bottom:14px;line-height:1.62}
+
+  /* ---- set tracker ---- */
+  .setbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 2px}
+  .setbar .sl{font-family:"DM Mono";font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink3);margin-right:2px}
+  .set{font-family:"DM Mono";font-size:13px;min-height:40px;padding:0 14px;border-radius:10px;
+    border:1px solid var(--line);background:var(--panel2);color:var(--ink2);cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;-webkit-tap-highlight-color:transparent}
+  .set:before{content:"";width:15px;height:15px;border-radius:4px;border:1.5px solid var(--ink3);
+    display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none}
+  .set.done{color:var(--ink);border-color:var(--str);background:var(--str-soft)}
+  .set.done:before{content:"\2713";background:var(--str);border-color:var(--str);color:var(--bg)}
+  .set:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:11px;padding:12px 14px;font-size:14px;margin:12px 0;line-height:1.6}
+  .callout.orange{background:rgba(255,122,47,.09);border:1px solid rgba(255,122,47,.32);color:var(--ink2)}
+  .callout.purple{background:var(--str-soft);border:1px solid var(--str-line);color:var(--ink2)}
+  .callout.yellow{background:rgba(255,180,61,.10);border:1px solid rgba(255,180,61,.32);color:var(--ink2)}
+  .callout.green{background:rgba(39,196,173,.09);border:1px solid rgba(39,196,173,.32);color:var(--ink2)}
+  .callout b{color:var(--ink);font-weight:700}
+
+  .sub-h{font-family:"DM Mono";font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--ink3);margin:16px 0 8px}
+
+  ol.steps{padding-left:20px;color:var(--ink2);font-size:15px}
+  ol.steps li{margin:7px 0;padding-left:4px;line-height:1.55}
+  ol.steps li b{color:var(--ink)}
+  ul.cues{list-style:none;padding-left:0;color:var(--ink2);font-size:14px}
+  ul.cues li{padding:8px 0 8px 20px;position:relative;border-bottom:1px solid var(--line);line-height:1.55}
+  ul.cues li:last-child{border-bottom:0}
+  ul.cues li:before{content:"\203A";position:absolute;left:2px;top:6px;color:var(--str);font-size:17px}
+  ul.cues b{color:var(--ink)}
+  ul.plain{list-style:disc;padding-left:20px;color:var(--ink2);font-size:14px}
+  ul.plain li{margin:6px 0;line-height:1.55}
+  ul.plain b{color:var(--ink)}
+
+  .step-row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .step-row:last-child{border-bottom:0}
+  .step-n{font-family:"DM Mono";font-size:10px;letter-spacing:.06em;color:var(--str);
+    background:var(--str-soft);border:1px solid var(--str-line);
+    border-radius:6px;padding:3px 8px;white-space:nowrap;margin-top:1px;flex:none}
+  .step-body{font-size:14.5px;color:var(--ink2);line-height:1.58}
+  .step-body b{color:var(--ink)}
+
+  .setup-steps{counter-reset:setup}
+  .setup-step{position:relative;padding:9px 0 9px 30px;border-bottom:1px solid var(--line);
+    font-size:14.5px;color:var(--ink2);line-height:1.55;overflow-wrap:break-word}
+  .setup-step:last-child{border-bottom:0}
+  .setup-step b{color:var(--ink)}
+  .setup-step:before{counter-increment:setup;content:counter(setup);position:absolute;left:0;top:9px;
+    font-family:"Bebas Neue";font-size:23px;line-height:1;color:var(--str)}
+
+  .first-badge{display:inline-flex;align-items:center;gap:6px;
+    font-family:"DM Mono";font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent);border:1px solid rgba(255,122,47,.4);border-radius:6px;
+    padding:4px 9px;margin-bottom:12px}
+  html[data-theme="light"] .first-badge{border-color:rgba(194,87,15,.4)}
+
+  .wu-sets{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin:12px 0}
+  .wu-sets .label{font-family:"DM Mono";font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:9px}
+  .wu-set-row{display:flex;gap:11px;align-items:baseline;padding:5px 0;font-size:14px;color:var(--ink2);line-height:1.5}
+  .wu-set-row .wt{font-family:"DM Mono";font-size:12.5px;color:var(--ink);min-width:96px;flex:none}
+
+  code{font-family:"DM Mono";font-size:.9em;color:var(--ink)}
+  .resetbar{display:flex;justify-content:center;margin-top:18px}
+  .resetbar button{font-family:"DM Mono";font-size:11px;letter-spacing:.08em;color:var(--ink3);
+    background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 16px;min-height:38px;cursor:pointer}
+  .resetbar button:hover{color:var(--ink2);border-color:var(--ink3)}
+  footer{color:var(--ink3);font-size:11px;text-align:center;font-family:"DM Mono";letter-spacing:.04em;margin-top:18px}
+  .card,.sess-header,.set,.tbtn{transition:background-color .3s ease,border-color .3s ease,color .3s ease}
+
+  /* ---- rest timer bar (fixed, bottom) ---- */
+  .restbar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--panel);
+    border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.28);
+    padding:9px 16px calc(9px + env(safe-area-inset-bottom));
+    padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  html[data-theme="light"] .restbar{box-shadow:0 -6px 20px rgba(20,28,40,.12)}
+  .rb-state{display:flex;align-items:center;gap:12px}
+  .rb-state[hidden]{display:none}
+  #rb-idle{justify-content:space-between}
+  .rb-idle-label{font-family:"DM Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink3);display:flex;align-items:center;gap:7px}
+  .rb-info{display:flex;flex-direction:column;min-width:0;line-height:1.05}
+  .rb-time{font-family:"Bebas Neue";font-size:30px;line-height:1;color:var(--ink);letter-spacing:.02em}
+  .rb-label{font-family:"DM Mono";font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+  .rb-ctrls{display:flex;gap:8px;margin-left:auto;flex:none}
+  .rb-btn{font-family:"DM Mono";font-size:13px;min-width:44px;height:44px;padding:0 11px;border-radius:11px;
+    border:1px solid var(--line);background:var(--panel2);color:var(--ink2);cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+  .rb-btn:hover{border-color:var(--ink3)}
+  .rb-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .rb-btn.wide{min-width:54px}
+  .restbar.done{background:var(--str-soft);border-top-color:var(--str)}
+  .restbar.done .rb-time{color:var(--str)}
+  @media(prefers-reduced-motion:no-preference){
+    @keyframes rbflash{0%,100%{background:var(--panel)}50%{background:var(--str-soft)}}
+    .restbar.done{animation:rbflash .5s ease 3}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="ctl">
+    <a class="tbtn" href="index.html#day-2026-06-29" aria-label="Back to plan"><span class="ic" aria-hidden="true">&#8592;</span><span class="lbl">Plan</span></a>
+    <button type="button" class="tbtn" id="theme-toggle" aria-label="Switch to light theme"><span class="ic" aria-hidden="true">&#9790;</span><span class="lbl">Dark</span></button>
+  </div>
+
+  <div class="sess-header">
+    <div class="kicker">W27 &middot; Down Phase &middot; Full Body</div>
+    <h1>FULL BODY</h1>
+    <div class="when"><b>Mon 29 Jun</b> &middot; Shoe: Converse Chuck 70s &middot; ~35 min</div>
+    <div class="sess-meta">
+      <div class="pill"><span class="n">6</span><span class="l">Exercises</span></div>
+      <div class="pill"><span class="n">0</span><span class="l">New</span></div>
+      <div class="pill"><span class="n">~10</span><span class="l">Min warm-up</span></div>
+      <div class="pill"><span class="n">35</span><span class="l">Min total</span></div>
+    </div>
+  </div>
+  <div class="callout orange" style="margin-bottom:4px">Deload full-body — nothing new. Skip if run-down.</div>
+  <div class="section-label">Warm-Up &mdash; ~10 min</div>
+  <div class="card wu">
+    <p style="font-size:14px;color:var(--ink2);margin-bottom:13px">Work through in order. Single-leg work later asks for balance and right-side control — prime the ankle, hip and glute well.</p>
+    <div class="step-row"><span class="step-n">01</span><div class="step-body"><b>Ankle circles</b> &mdash; 10 each direction, each foot. First, given the Achilles history. Extra time if the right heel feels stiff.</div></div>
+    <div class="step-row"><span class="step-n">02</span><div class="step-body"><b>Glute bridges</b> &mdash; 2 × 10. Drive hips up, squeeze hard at the top, lower slowly. Wakes the posterior chain.</div></div>
+    <div class="step-row"><span class="step-n">03</span><div class="step-body"><b>Hip circles / single-leg balance</b> &mdash; 10 per leg, or 30 s balance per leg. Opens the hip; rehearses single-leg stance.</div></div>
+    <div class="step-row"><span class="step-n">04</span><div class="step-body"><b>Bodyweight squats</b> &mdash; 10 slow, parallel or below. Rehearses the knee-extension pattern the Leg Press loads.</div></div>
+    <div class="step-row"><span class="step-n">05</span><div class="step-body"><b>Leg swings (front-back)</b> &mdash; 10 per leg. Loosen hamstrings and hip flexors.</div></div>
+    <div class="step-row"><span class="step-n">06</span><div class="step-body"><b>Calf raises (bodyweight)</b> &mdash; 2 × 8 slow, 3 s down. Prep for the calf work; extra 30 s if the right Achilles feels tight.</div></div>
+    <div class="step-row"><span class="step-n">07</span><div class="step-body"><b>Dead bug (unloaded)</b> &mdash; 5 per side. Feel the lower back press flat into the floor.</div></div>
+  </div>
+  <div class="section-label">Exercises</div>
+  <div class="card ex">
+    <div class="ex-header"><span class="ex-num">01 / 06</span><div><div class="ex-title">Leg Press</div><div class="ex-spec">Life Fitness Optima &middot; OSLP &middot; 2 × 8 @ 37 kg &middot; Rest 90–120 sec</div></div></div>
+    <div class="what">Seated horizontal press — quads first, glutes and hamstrings assisting, no spinal load.
+</div>
+    <div class="sub-h">Quick reset</div>
+    <ul class="plain">
+      <li>Back flush; knees ~90° at start; whole foot on the platform; latches engaged.</li>
+    </ul>
+    <div class="setbar"><span class="sl">Tap when done</span>
+      <button class="set" data-k="c2s-w27f-legpress-1" data-rest="90" data-label="Leg Press">Set 1</button>
+      <button class="set" data-k="c2s-w27f-legpress-2" data-rest="90" data-label="Leg Press">Set 2</button>
+    </div>
+    <div class="sub-h">Key cues</div>
+    <ul class="cues">
+      <li>Push the floor away — glutes pinned to the seat, don't lift the hips.</li>
+      <li>Knees track over the toes — don't let the right knee cave inward under fatigue. That's your old collapse pattern; the late reps are where it shows.</li>
+      <li>Soft lockout, 2 s back.</li>
+    </ul>
+    <div class="callout yellow" style="margin-top:12px">37 kg is the working target. If set 1 sits at RPE ≤5, hold today and we step up next session; if form breaks or the right knee caves, drop a pin. Log the weight + RPE.
+</div>
+  </div>
+  <div class="card ex">
+    <div class="ex-header"><span class="ex-num">02 / 06</span><div><div class="ex-title">Romanian Deadlift</div><div class="ex-spec">Dumbbells &middot; 2 × 8 @ 10 kg/hand &middot; Rest 90 sec</div></div></div>
+    <div class="what">Hip-hinge loading the hamstrings and glutes eccentrically. Strong hamstrings offload the calf and Achilles — one of the most tendon-protective lifts here.
+</div>
+    <div class="sub-h">Quick reset</div>
+    <ul class="plain">
+      <li>Dumbbell each hand at the hips; soft knees.</li>
+    </ul>
+    <div class="setbar"><span class="sl">Tap when done</span>
+      <button class="set" data-k="c2s-w27f-dbrdl-1" data-rest="90" data-label="Romanian Deadlift">Set 1</button>
+      <button class="set" data-k="c2s-w27f-dbrdl-2" data-rest="90" data-label="Romanian Deadlift">Set 2</button>
+    </div>
+    <div class="sub-h">Key cues</div>
+    <ul class="cues">
+      <li>Hips back, not down — if the knees bend a lot, you're squatting.</li>
+      <li>Long spine — neutral back, don't round the upper back.</li>
+      <li>2–3 s down — the slow eccentric is the point.</li>
+    </ul>
+    <div class="callout orange" style="margin-top:12px">The RDL lengthens the calf complex under load. Slow, controlled descent; a muscle stretch is fine, anything sharp in the tendon is a stop signal — log it.</div>
+  </div>
+  <div class="card ex">
+    <div class="ex-header"><span class="ex-num">03 / 06</span><div><div class="ex-title">Machine Chest Press</div><div class="ex-spec">Life Fitness Optima &middot; OSCP &middot; 2 × 10 @ 14 kg &middot; Rest 90 sec</div></div></div>
+    <div class="what">Seated press for chest, front shoulders and triceps, path guided by the machine.
+</div>
+    <div class="sub-h">Quick reset</div>
+    <ul class="plain">
+      <li>Back flush; handles at mid-chest; elbows ~45°.</li>
+    </ul>
+    <div class="setbar"><span class="sl">Tap when done</span>
+      <button class="set" data-k="c2s-w27f-chestpre-1" data-rest="90" data-label="Machine Chest Press">Set 1</button>
+      <button class="set" data-k="c2s-w27f-chestpre-2" data-rest="90" data-label="Machine Chest Press">Set 2</button>
+    </div>
+    <div class="sub-h">Key cues</div>
+    <ul class="cues">
+      <li>Blades down and back — don't shrug toward the ears.</li>
+      <li>Elbows at 45° — tucked is stronger and easier on the shoulder.</li>
+      <li>Soft lockout, 2 s back.</li>
+    </ul>
+    <div class="callout yellow" style="margin-top:12px">Reps before pins: aim for the top of the rep range at 14 kg with clean form before adding a pin. Log reps + RPE.</div>
+  </div>
+  <div class="card ex">
+    <div class="ex-header"><span class="ex-num">04 / 06</span><div><div class="ex-title">Single-Arm Cable Row</div><div class="ex-spec">Dual Adjustable Pulley &middot; OSDAP &middot; 2 × 10/side @ 7.5 kg &middot; Rest 60–90 sec</div></div></div>
+    <div class="what">Standing one-arm row on the cable column. Working one side at a time forces the trunk to resist twisting — the same anti-rotation bracing you do every stride.
+</div>
+    <div class="sub-h">Quick reset</div>
+    <ul class="plain">
+      <li>Pulley at lower-rib height; taut cable; soft knees, long flat back.</li>
+    </ul>
+    <div class="setbar"><span class="sl">Tap when done</span>
+      <button class="set" data-k="c2s-w27f-cablerow-1" data-rest="60" data-label="Single-Arm Cable Row">Set 1</button>
+      <button class="set" data-k="c2s-w27f-cablerow-2" data-rest="60" data-label="Single-Arm Cable Row">Set 2</button>
+    </div>
+    <div class="sub-h">Key cues</div>
+    <ul class="cues">
+      <li>Lead with the elbow — the hand just holds on.</li>
+      <li>Don't twist — resisting rotation is the exercise.</li>
+      <li>Full reach forward, 2 s out.</li>
+    </ul>
+    <div class="callout yellow" style="margin-top:12px">Work at 7.5 kg and only add 2.5 kg once you complete all sets per side with ~2 reps to spare. Log the working weight each arm + any L/R gap.</div>
+  </div>
+  <div class="card ex">
+    <div class="ex-header"><span class="ex-num">05 / 06</span><div><div class="ex-title">Calf Raise — Slow Eccentric</div><div class="ex-spec">Bodyweight &middot; 2 × 15 BW &middot; Rest 60 sec</div></div></div>
+    <div class="what">Direct calf and Achilles loading; the slow 3-second lowering is where the tendon benefit comes from. Your primary Achilles-resilience work — these reps count as today's daily heel drops.
+</div>
+    <div class="sub-h">Quick reset</div>
+    <ul class="plain">
+      <li>Step edge if available; fingertips on a wall for balance only.</li>
+    </ul>
+    <div class="setbar"><span class="sl">Tap when done</span>
+      <button class="set" data-k="c2s-w27f-calfrais-1" data-rest="60" data-label="Calf Raise — Slow Eccentric">Set 1</button>
+      <button class="set" data-k="c2s-w27f-calfrais-2" data-rest="60" data-label="Calf Raise — Slow Eccentric">Set 2</button>
+    </div>
+    <div class="sub-h">Key cues</div>
+    <ul class="cues">
+      <li>Three seconds down — count it; fast reps miss the point.</li>
+      <li>Push through the big toe — ball-of-foot loading, the pattern your rehab targets.</li>
+      <li>Full range — as high up, as low down as you can.</li>
+    </ul>
+    <div class="callout orange" style="margin-top:12px">Single-leg roughly doubles the load per tendon. Calf-belly burn is fine; anything sharp in the tendon (the cord above the heel) is a stop signal — drop that set to double-leg and log it. Note any left/right difference.
+</div>
+  </div>
+  <div class="card ex">
+    <div class="ex-header"><span class="ex-num">06 / 06</span><div><div class="ex-title">Dead Bug</div><div class="ex-spec">Bodyweight &middot; 2 × 10 BW &middot; Rest 60 sec</div></div></div>
+    <div class="what">Anti-extension core — the trunk holds steady while the limbs drive, the same job it does each stride.
+</div>
+    <div class="sub-h">Quick reset</div>
+    <ul class="plain">
+      <li>On your back, tabletop legs, lower back pressed flat throughout.</li>
+    </ul>
+    <div class="setbar"><span class="sl">Tap when done</span>
+      <button class="set" data-k="c2s-w27f-deadbug-1" data-rest="60" data-label="Dead Bug">Set 1</button>
+      <button class="set" data-k="c2s-w27f-deadbug-2" data-rest="60" data-label="Dead Bug">Set 2</button>
+    </div>
+    <div class="sub-h">Key cues</div>
+    <ul class="cues">
+      <li>Back flat like a table.</li>
+      <li>Slow — 3 s out, 2 s back, opposite arm and leg.</li>
+    </ul>
+  </div>
+  <div class="section-label">Cool-Down &mdash; ~8–10 min</div>
+  <div class="card cd">
+    <p style="font-size:14px;color:var(--ink2);margin-bottom:13px">Calf and Achilles first — you've loaded the knee/hinge complex hard.</p>
+    <div class="step-row"><span class="step-n">01</span><div class="step-body"><b>Calf + soleus stretch (wall)</b> &mdash; 45 s straight-knee then 30 s bent-knee per leg. Both sides.</div></div>
+    <div class="step-row"><span class="step-n">02</span><div class="step-body"><b>Standing quad stretch</b> &mdash; 45 s per leg.</div></div>
+    <div class="step-row"><span class="step-n">03</span><div class="step-body"><b>Hamstring stretch</b> &mdash; 45 s per leg.</div></div>
+    <div class="step-row"><span class="step-n">04</span><div class="step-body"><b>Half-kneeling hip-flexor stretch</b> &mdash; 45–90 s per side. Tuck the pelvis first, then drive forward. Today's daily hip-flexor work — ticked off.</div></div>
+    <div class="step-row"><span class="step-n">05</span><div class="step-body"><b>Figure-4 / pigeon</b> &mdash; 60 s per side. Opens the hip rotators.</div></div>
+    <div class="step-row"><span class="step-n">06</span><div class="step-body"><b>Child's pose</b> &mdash; 60 s. Finish here.</div></div>
+  </div>
+  <div class="resetbar"><button type="button" id="reset-sets">Reset set ticks</button></div>
+  <footer>City2Surf 2026 training block &middot; Mon 29 Jun</footer>
+
+</div>
+
+<div class="restbar" id="restbar" aria-live="polite">
+  <div class="rb-state" id="rb-idle">
+    <span class="rb-idle-label"><span aria-hidden="true">&#9201;</span> Rest timer</span>
+    <div class="rb-ctrls">
+      <button type="button" class="rb-btn preset" data-sec="60">60s</button>
+      <button type="button" class="rb-btn preset" data-sec="90">90s</button>
+      <button type="button" class="rb-btn preset" data-sec="120">120s</button>
+    </div>
+  </div>
+  <div class="rb-state" id="rb-run" hidden>
+    <div class="rb-info"><div class="rb-time" id="rb-time">0:00</div><div class="rb-label" id="rb-label">Rest</div></div>
+    <div class="rb-ctrls">
+      <button type="button" class="rb-btn" id="rb-add" aria-label="Add 15 seconds">+15</button>
+      <button type="button" class="rb-btn wide" id="rb-pause" aria-label="Pause">&#10073;&#10073;</button>
+      <button type="button" class="rb-btn" id="rb-reset" aria-label="Reset to full rest">&#8635;</button>
+      <button type="button" class="rb-btn" id="rb-close" aria-label="Dismiss timer">&#10005;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---- safe storage (degrades gracefully) ---- */
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+             set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---- theme toggle (follows system until pinned) ---- */
+(function(){
+  const KEY='c2s-theme', root=document.documentElement;
+  const btn=document.getElementById('theme-toggle');
+  const meta=document.querySelector('meta[name="theme-color"]');
+  const META={dark:'#13161b',light:'#f3f4f7'};
+  const mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: light)'):null;
+  const cur=()=>root.getAttribute('data-theme')==='light'?'light':'dark';
+  function sync(){
+    const t=cur();
+    if(meta)meta.setAttribute('content',META[t]);
+    if(btn){
+      btn.querySelector('.ic').textContent=t==='light'?'\u2600':'\u263e';
+      btn.querySelector('.lbl').textContent=t==='light'?'Light':'Dark';
+      btn.setAttribute('aria-label',t==='light'?'Switch to dark theme':'Switch to light theme');
+    }
+  }
+  sync();
+  if(btn)btn.addEventListener('click',()=>{root.setAttribute('data-theme',cur()==='light'?'dark':'light');store.set(KEY,cur());sync();});
+  if(mq){const onSys=e=>{if(!store.get(KEY)){root.setAttribute('data-theme',e.matches?'light':'dark');sync();}};
+    mq.addEventListener?mq.addEventListener('change',onSys):mq.addListener(onSys);}
+})();
+
+/* ---- rest timer (sticky bottom bar) ---- */
+const RestTimer=(function(){
+  const bar=document.getElementById('restbar');
+  const idle=document.getElementById('rb-idle'), run=document.getElementById('rb-run');
+  const tEl=document.getElementById('rb-time'), lEl=document.getElementById('rb-label');
+  const pauseBtn=document.getElementById('rb-pause');
+  let endAt=0, remain=0, duration=0, label='Rest', running=false, paused=false;
+  let tick=null, revert=null, actx=null;
+
+  function fmt(ms){ms=Math.max(0,Math.ceil(ms/1000));return Math.floor(ms/60)+':'+String(ms%60).padStart(2,'0');}
+  function draw(ms){tEl.textContent=fmt(ms);lEl.textContent=label;}
+  function show(which){idle.hidden=(which!=='idle');run.hidden=(which!=='run');}
+  function clearTimers(){if(tick){clearInterval(tick);tick=null;}if(revert){clearTimeout(revert);revert=null;}}
+
+  function unlockAudio(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==='suspended')actx.resume();}catch(e){}}
+  function beep(){try{if(!actx)return;const t=actx.currentTime;
+    [0,0.18].forEach(off=>{const o=actx.createOscillator(),g=actx.createGain();
+      o.connect(g);g.connect(actx.destination);o.type='sine';o.frequency.value=880;
+      g.gain.setValueAtTime(0.0001,t+off);g.gain.exponentialRampToValueAtTime(0.32,t+off+0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+off+0.15);o.start(t+off);o.stop(t+off+0.16);});
+  }catch(e){}}
+
+  function render(){
+    if(!running){return;}
+    const ms=paused?remain:(endAt-Date.now());
+    if(!paused && ms<=0){finish();return;}
+    draw(Math.max(0,ms));
+  }
+  function startInterval(){clearInterval(tick);tick=setInterval(render,250);}
+
+  function finish(){
+    clearTimers();running=false;paused=false;draw(0);bar.classList.add('done');beep();
+    revert=setTimeout(()=>{bar.classList.remove('done');toIdle();},5000);
+  }
+  function toIdle(){clearTimers();running=false;paused=false;bar.classList.remove('done');show('idle');}
+
+  function start(sec,lab){
+    unlockAudio();clearTimers();bar.classList.remove('done');
+    duration=sec*1000;remain=duration;label=lab||'Rest';
+    running=true;paused=false;endAt=Date.now()+remain;
+    pauseBtn.innerHTML='&#10073;&#10073;';pauseBtn.setAttribute('aria-label','Pause');
+    show('run');draw(remain);startInterval();
+  }
+  function togglePause(){
+    if(!running)return;
+    if(paused){paused=false;endAt=Date.now()+remain;pauseBtn.innerHTML='&#10073;&#10073;';
+      pauseBtn.setAttribute('aria-label','Pause');startInterval();}
+    else{paused=true;remain=endAt-Date.now();clearInterval(tick);tick=null;
+      pauseBtn.textContent='▶';pauseBtn.setAttribute('aria-label','Resume');draw(remain);}
+  }
+  function add15(){if(!running)return;if(paused){remain+=15000;}else{endAt+=15000;}render();}
+  function reset(){if(!running)return;remain=duration;if(!paused)endAt=Date.now()+remain;
+    bar.classList.remove('done');render();}
+
+  document.getElementById('rb-add').addEventListener('click',add15);
+  pauseBtn.addEventListener('click',togglePause);
+  document.getElementById('rb-reset').addEventListener('click',reset);
+  document.getElementById('rb-close').addEventListener('click',toIdle);
+  idle.querySelectorAll('.preset').forEach(b=>b.addEventListener('click',()=>start(+b.dataset.sec,'Rest')));
+
+  /* keep correct after the screen sleeps / tab backgrounds */
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&running&&!paused)render();});
+
+  return {start};
+})();
+
+/* ---- set trackers (auto-start rest on completion) ---- */
+(function(){
+  const sets=document.querySelectorAll('.set');
+  sets.forEach(b=>{
+    if(store.get(b.dataset.k)==='1')b.classList.add('done');
+    b.setAttribute('aria-pressed',b.classList.contains('done'));
+    b.addEventListener('click',()=>{
+      const done=b.classList.toggle('done');
+      b.setAttribute('aria-pressed',done);
+      store.set(b.dataset.k,done?'1':'0');
+      if(done){
+        const sec=parseInt(b.dataset.rest||'0',10);
+        if(sec>0)RestTimer.start(sec,'Rest · '+(b.dataset.label||''));
+      }
+    });
+  });
+  const reset=document.getElementById('reset-sets');
+  if(reset)reset.addEventListener('click',()=>{
+    sets.forEach(b=>{b.classList.remove('done');b.setAttribute('aria-pressed','false');store.set(b.dataset.k,'0');});
+  });
+})();
+</script>
+</body>
+</html>

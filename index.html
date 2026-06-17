@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#13161b">
+<title>City2Surf 2026 — Training Companion</title>
+<script>
+/* set theme before first paint to avoid a flash of the wrong palette */
+(function(){
+  var t='dark';
+  try{
+    var s=localStorage.getItem('c2s-theme');
+    var sys=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';
+    t=(s==='light'||s==='dark')?s:sys;
+  }catch(e){}
+  document.documentElement.setAttribute('data-theme',t);
+  var m=document.querySelector('meta[name="theme-color"]');
+  if(m)m.setAttribute('content',t==='light'?'#f4f6f9':'#13161b');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#13161b; --bg2:#181c23; --panel:#1d222b; --panel2:#232934;
+    --line:#2c3441; --ink:#eef2f6; --ink2:#aeb8c4; --ink3:#7c8794;
+    --rest:#525a66; --easy:#27c4ad; --mod:#3f8cff; --hard:#ff5a5f;
+    --long:#ffb43d; --str:#a98bff; --race:#ff7a2f;
+    --accent:#ff7a2f; --ocean:#27c4ad; --ok:#3ecf8e; --warn:#ffb43d; --stop:#ff5a5f;
+    --shadow:0 10px 30px rgba(0,0,0,.45);
+    /* surfaces & accents that were previously hard-coded, now themeable */
+    --line-soft:rgba(44,52,65,.6);
+    --tint:rgba(255,255,255,.03); --tint-hover:rgba(255,255,255,.05);
+    --head-grad:linear-gradient(135deg,#1b2029,#15191f);
+    --head-stripe:rgba(255,255,255,.022);
+    --today-grad:linear-gradient(160deg,#22201c 0%,#1d222b 45%,#1d222b 100%);
+    --today-border:rgba(255,122,47,.45);
+    --today-glow:rgba(255,122,47,.12);
+    --bg-glow-1:rgba(255,122,47,.10); --bg-glow-2:rgba(39,196,173,.08);
+  }
+  /* ---------- light theme ---------- */
+  html[data-theme="light"]{
+    --bg:#f4f6f9; --bg2:#e9edf2; --panel:#ffffff; --panel2:#f2f5f8;
+    --line:#d9dfe7; --ink:#1b212b; --ink2:#4c5764; --ink3:#677280;
+    --rest:#6b7480; --easy:#0b7e6f; --mod:#2f6fe0; --hard:#cf2e34;
+    --long:#9a6410; --str:#7c5cf0; --race:#d9530a;
+    --accent:#d9530a; --ocean:#0b7e6f; --ok:#168a5d; --warn:#9a6410; --stop:#cf2e34;
+    --shadow:0 8px 24px rgba(27,40,60,.12);
+    --line-soft:rgba(120,134,150,.30);
+    --tint:rgba(20,28,40,.035); --tint-hover:rgba(20,28,40,.06);
+    --head-grad:linear-gradient(135deg,#ffffff,#eef2f7);
+    --head-stripe:rgba(20,28,40,.03);
+    --today-grad:linear-gradient(160deg,#fff6ef 0%,#ffffff 55%,#ffffff 100%);
+    --today-border:rgba(217,83,10,.40);
+    --today-glow:rgba(217,83,10,.10);
+    --bg-glow-1:rgba(217,83,10,.06); --bg-glow-2:rgba(14,155,136,.06);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{margin:0;background:
+      radial-gradient(1200px 600px at 85% -10%, var(--bg-glow-1), transparent 55%),
+      radial-gradient(900px 500px at -5% 10%, var(--bg-glow-2), transparent 50%),
+      var(--bg);
+    color:var(--ink);font-family:"Hanken Grotesk",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.5;transition:background-color .3s ease,color .3s ease;}
+  .wrap{max-width:1180px;margin:0 auto;padding:18px 18px 80px;padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right));}
+  a{color:var(--accent)}
+
+  header.top{position:relative;border:1px solid var(--line);border-radius:18px;
+    background:var(--head-grad);overflow:hidden;padding:28px 26px;}
+  header.top:before{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(115deg, var(--head-stripe) 0 2px, transparent 2px 26px);pointer-events:none;}
+  .kicker{font-family:"DM Mono",monospace;letter-spacing:.32em;text-transform:uppercase;
+    font-size:11px;color:var(--accent);margin:0 0 6px}
+  h1{font-family:"Bebas Neue",sans-serif;font-weight:400;letter-spacing:.01em;
+    font-size:clamp(38px,7vw,72px);line-height:.92;margin:0;}
+  h1 .b{color:var(--accent)}
+  .sub{color:var(--ink2);margin:10px 0 0;max-width:66ch;font-size:15px}
+  .countbar{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+  .pill{display:flex;flex-direction:column;gap:2px;background:var(--tint);
+    border:1px solid var(--line);border-radius:12px;padding:9px 15px;min-width:92px}
+  .pill .n{font-family:"Bebas Neue";font-size:28px;line-height:1;color:var(--ink)}
+  .pill .l{font-family:"DM Mono";font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+
+  .phases{display:flex;gap:6px;margin:20px 0 6px;flex-wrap:wrap}
+  .ph{flex:1 1 90px;border-radius:10px;padding:9px 11px;border:1px solid var(--line);
+    background:var(--panel);min-width:108px}
+  .ph b{font-family:"DM Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+  .ph span{font-size:12px;color:var(--ink2)}
+  .ph.build{border-top:3px solid var(--mod)} .ph.down{border-top:3px solid var(--rest)}
+  .ph.spec{border-top:3px solid var(--hard)} .ph.taper{border-top:3px solid var(--long)}
+  .ph.race{border-top:3px solid var(--race)}
+
+  /* ---------- TODAY panel ---------- */
+  .today{position:relative;margin-top:18px;border:1px solid var(--today-border);border-radius:18px;
+    background:var(--today-grad);box-shadow:var(--shadow);overflow:hidden}
+  .today:before{content:"";position:absolute;inset:0;
+    background:radial-gradient(560px 200px at 12% 0%, var(--today-glow), transparent 60%);pointer-events:none}
+  .today-inner{padding:20px 22px 22px;position:relative}
+  .today .tk{font-family:"DM Mono";font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px}
+  .today .tk .live{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(255,122,47,.5);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,122,47,.45)}70%{box-shadow:0 0 0 9px rgba(255,122,47,0)}100%{box-shadow:0 0 0 0 rgba(255,122,47,0)}}
+  @media (prefers-reduced-motion: reduce){.today .tk .live{animation:none}}
+  .today h2{font-family:"Bebas Neue";font-weight:400;font-size:clamp(26px,4.5vw,38px);margin:8px 0 2px;line-height:1}
+  .today .tmeta{font-family:"DM Mono";font-size:12px;color:var(--ink3);letter-spacing:.05em}
+  .today .tbody{color:var(--ink2);font-size:14.5px;margin-top:10px;max-width:78ch}
+  .today .tbody b{color:var(--ink)}
+  .tchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .tchip{font-family:"DM Mono";font-size:11px;letter-spacing:.06em;border:1px solid var(--line);
+    border-radius:999px;padding:4px 11px;color:var(--ink2);background:var(--tint)}
+  .tchip.shoe{color:var(--easy);border-color:rgba(39,196,173,.4)}
+  .checklist{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px}
+  .checklist .clh{font-family:"DM Mono";font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+  .ck{display:flex;align-items:flex-start;gap:11px;padding:7px 8px;border-radius:9px;cursor:pointer;user-select:none}
+  .ck:hover{background:var(--tint-hover)}
+  .ck input{appearance:none;-webkit-appearance:none;width:18px;height:18px;min-width:18px;margin-top:2px;border:1.5px solid var(--ink3);
+    border-radius:5px;cursor:pointer;position:relative;background:transparent}
+  .ck input:checked{background:var(--ok);border-color:var(--ok)}
+  .ck input:checked:after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:#0c1410;font-size:13px;font-weight:700}
+  .ck input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .ck .ckt{font-size:14px;color:var(--ink)}
+  .ck .ckd{font-size:12.5px;color:var(--ink3)}
+  .ck input:checked ~ div .ckt{color:var(--ink3);text-decoration:line-through}
+  .today .strtable{margin-top:12px}
+  /* day navigation in the Today panel */
+  .tnav{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+  .tnav .tnav-label{flex:1 1 auto;margin:0;min-width:0}
+  .tnav-btn{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+    background:var(--tint);color:var(--ink);font-size:19px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-family:"DM Mono";padding:0}
+  .tnav-btn:hover:not(:disabled){border-color:var(--ink3)}
+  .tnav-btn:active:not(:disabled){background:var(--tint-hover)}
+  .tnav-btn:disabled{opacity:.3;cursor:default}
+  .tnav-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .tnav-today{flex:none;font-family:"DM Mono";font-size:11px;letter-spacing:.06em;
+    border:1px solid var(--line);border-radius:999px;padding:6px 12px;min-height:30px;
+    color:var(--ink2);background:var(--tint);cursor:pointer}
+  .tnav-today:hover{border-color:var(--ink3);color:var(--ink)}
+  .tnav-today:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* ---------- shared cards ---------- */
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:18px 20px;margin-top:18px;box-shadow:var(--shadow)}
+  details.sec.card{padding:0}
+  .card h2{font-family:"Bebas Neue";font-weight:400;letter-spacing:.02em;font-size:26px;margin:0 0 4px}
+  .card h2 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  .card .lead{color:var(--ink2);font-size:14px;margin:2px 0 8px}
+  details.box{border:1px solid var(--line);border-radius:12px;background:var(--panel2);margin-top:10px;overflow:hidden}
+  details.box>summary{cursor:pointer;list-style:none;padding:13px 16px;font-weight:600;
+    display:flex;justify-content:space-between;align-items:center;font-size:14.5px;gap:10px}
+  details.box>summary::-webkit-details-marker{display:none}
+  details.box>summary .chev{color:var(--ink3);transition:transform .2s;font-family:"DM Mono"}
+  details.box[open]>summary .chev{transform:rotate(90deg)}
+  .boxbody{padding:4px 16px 16px;color:var(--ink2);font-size:14px}
+  .boxbody ul{margin:6px 0 6px 2px;padding-left:18px}
+  .boxbody li{margin:4px 0}
+  .boxbody b{color:var(--ink)}
+  code,.mono{font-family:"DM Mono";font-size:.92em;color:var(--ink)}
+  .callout{display:flex;gap:10px;border:1px solid var(--line);border-left-width:3px;border-radius:10px;
+    padding:10px 12px;margin:9px 0;font-size:13.5px;background:var(--tint)}
+  .callout.ok{border-left-color:var(--ok)} .callout.warn{border-left-color:var(--warn)}
+  .callout.stop{border-left-color:var(--stop)} .callout.info{border-left-color:var(--mod)}
+  .callout .ico{font-family:"DM Mono";flex:none}
+  .callout.ok .ico{color:var(--ok)} .callout.warn .ico{color:var(--warn)}
+  .callout.stop .ico{color:var(--stop)} .callout.info .ico{color:var(--mod)}
+
+  table.ref{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0}
+  table.ref th{font-family:"DM Mono";font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink3);text-align:left;padding:6px 10px;border-bottom:1px solid var(--line)}
+  table.ref td{padding:7px 10px;border-bottom:1px solid var(--line-soft);color:var(--ink2);vertical-align:top}
+  table.ref td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+  table.ref .mono{white-space:nowrap}
+
+  /* ---------- plan grid ---------- */
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .lg{display:flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink2)}
+  .sw{width:11px;height:11px;border-radius:3px}
+
+  .wkhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;
+    border-left:4px solid var(--line);padding:4px 0 8px 14px;margin-top:26px}
+  .wkhead .wn{font-family:"Bebas Neue";font-size:30px;line-height:.9}
+  .wkhead .wd{font-family:"DM Mono";font-size:12px;color:var(--ink3);letter-spacing:.05em}
+  .wkhead .wkkm{font-family:"DM Mono";font-size:12px;color:var(--ink2)}
+  .wkhead .wkfocus{flex-basis:100%;font-size:13px;color:var(--ink3)}
+  .tag{font-family:"DM Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    padding:3px 9px;border-radius:6px;border:1px solid var(--line);color:var(--ink2)}
+  .tag.build{color:var(--mod)} .tag.down{color:var(--ink3)} .tag.spec{color:var(--hard)}
+  .tag.taper{color:var(--long)} .tag.race{color:var(--race)}
+
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:8px}
+  @media(max-width:880px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.grid{grid-template-columns:1fr}}
+  .day{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:10px 11px;
+    cursor:pointer;position:relative;min-height:96px;transition:border-color .15s, transform .15s}
+  .day:hover{border-color:var(--ink3);transform:translateY(-1px)}
+  .day.is-today{outline:2px solid var(--accent);outline-offset:1px}
+  .day.done{opacity:.62}
+  .day.done .dy:after{content:" ✓";color:var(--ok)}
+  .day .dw{font-family:"DM Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+  .day .dy{font-weight:700;font-size:13.5px;margin:3px 0 2px;line-height:1.25}
+  .day .dm{font-family:"DM Mono";font-size:11px;color:var(--ink3)}
+  .day .bar{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:12px 0 0 12px}
+  .badge{position:absolute;top:8px;right:9px;font-family:"DM Mono";font-size:9px;letter-spacing:.08em;
+    text-transform:uppercase;border:1px solid var(--line);border-radius:5px;padding:2px 6px;color:var(--ink3)}
+  .badge.q{color:var(--hard);border-color:rgba(255,90,95,.4)}
+  .badge.key{color:var(--long);border-color:rgba(255,180,61,.4)}
+  .badge.fixed{color:var(--race);border-color:rgba(255,122,47,.5)}
+
+  .drawer{display:none;grid-column:1/-1;border:1px solid var(--line);border-radius:12px;
+    background:var(--panel2);padding:15px 17px;margin-top:2px}
+  .drawer.open{display:block}
+  .drawer h4{font-family:"Bebas Neue";font-weight:400;font-size:22px;margin:0 0 2px}
+  .drawer .dmeta{font-family:"DM Mono";font-size:11.5px;color:var(--ink3);margin-bottom:8px}
+  .drawer .dbody{font-size:14px;color:var(--ink2);max-width:80ch}
+  .drawer .dbody b{color:var(--ink)}
+  .drawer .note{font-size:13px;color:var(--ink3);margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
+  .strtable{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
+  .strtable td{padding:6px 10px;border-bottom:1px solid var(--line-soft);color:var(--ink2)}
+  .strtable td:first-child{color:var(--ink);font-weight:600;width:54%}
+  .strtable td:last-child{font-family:"DM Mono";font-size:12.5px}
+  .strtable tr.new td:first-child:after{content:"NEW";font-family:"DM Mono";font-size:9px;color:var(--accent);
+    border:1px solid rgba(255,122,47,.5);border-radius:4px;padding:1px 5px;margin-left:8px;vertical-align:1px}
+  .rchips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .rchip{font-family:"DM Mono";font-size:10.5px;letter-spacing:.05em;border:1px solid var(--line);
+    border-radius:6px;padding:3px 9px;color:var(--ink3)}
+  .rchip.on{color:var(--easy);border-color:rgba(39,196,173,.35)}
+  .rchip.off{text-decoration:line-through;opacity:.55}
+
+  .steps{margin:8px 0;padding-left:0;counter-reset:s;list-style:none}
+  .steps li{counter-increment:s;position:relative;padding:4px 0 4px 32px;font-size:13.5px;color:var(--ink2)}
+  .steps li:before{content:counter(s);position:absolute;left:0;top:5px;width:20px;height:20px;border-radius:6px;
+    border:1px solid var(--line);font-family:"DM Mono";font-size:11px;display:flex;align-items:center;justify-content:center;color:var(--ink3)}
+  .sub-title{font-weight:700;color:var(--ink);font-size:14px;margin:14px 0 4px}
+  .twin{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:8px 0}
+  @media(max-width:560px){.twin{grid-template-columns:1fr}}
+  .twin>div{border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;color:var(--ink2)}
+  .twin b{display:block;color:var(--ink);margin-bottom:2px;font-size:13px}
+  .recipe{border:1px dashed var(--line);border-radius:10px;padding:10px 13px;margin:9px 0}
+  .recipe .rl{font-family:"DM Mono";font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .recipe .rr{display:flex;gap:12px;padding:3px 0;font-size:13.5px}
+  .recipe .ra{font-family:"DM Mono";color:var(--accent);min-width:84px}
+  /* ---------- mobile table scroll ---------- */
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+  .tscroll table{margin:0;min-width:480px}
+  .tscroll::-webkit-scrollbar{height:6px}
+  .tscroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+  @media(max-width:560px){
+    table.ref td:first-child{white-space:normal}
+    table.ref .mono{white-space:normal}
+  }
+
+  /* ---------- collapsible top-level sections ---------- */
+  details.sec{padding:0}
+  details.sec>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;
+    padding:16px 20px;min-height:44px;user-select:none}
+  details.sec>summary::-webkit-details-marker{display:none}
+  details.sec>summary h2{margin:0;flex:1}
+  details.sec>summary .chev2{font-family:"DM Mono";color:var(--ink3);transition:transform .2s;flex:none}
+  details.sec[open]>summary .chev2{transform:rotate(90deg)}
+  details.sec>.secbody{padding:0 20px 18px}
+  details.sec>summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:16px}
+
+  /* ---------- header collapse + control bar ---------- */
+  details.hdrx>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;
+    margin-top:10px;font-family:"DM Mono";font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink3);border:1px solid var(--line);border-radius:999px;padding:7px 14px;min-height:34px}
+  details.hdrx>summary::-webkit-details-marker{display:none}
+  details.hdrx>summary .chev2{transition:transform .2s}
+  details.hdrx[open]>summary .chev2{transform:rotate(90deg)}
+  .ctlbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+  header.top,.today,.card{transition:background .3s ease,border-color .3s ease,box-shadow .3s ease}
+  #theme-toggle .ic{font-size:13px;line-height:1;display:inline-block;margin-right:2px}
+  .ctlbar button{font-family:"DM Mono";font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink2);background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    padding:9px 16px;min-height:38px;cursor:pointer}
+  .ctlbar button:active{background:var(--panel2)}
+  .ctlbar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  footer{margin-top:34px;color:var(--ink3);font-size:12.5px;font-family:"DM Mono";text-align:center}
+.guidelink{display:inline-block;margin-top:12px;font-family:"DM Mono",monospace;font-size:13px;font-weight:600;color:var(--str,#7c5cff);text-decoration:none;border:1px solid var(--str,#7c5cff);border-radius:8px;padding:7px 12px}.guidelink:hover{background:var(--str,#7c5cff);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="kicker">Sydney · 14 km · Sun 9 Aug 2026</p>
+  <h1>CITY<span class="b">2</span>SURF — TRAINING COMPANION</h1>
+  <details class="hdrx">
+    <summary><span class="chev2">›</span> Overview · countdown · phases</summary>
+    <p class="sub">Plan + daily routines in one place. The <b>Today</b> panel below shows exactly what's on — session, warm-up, stretches — with the doubling-up already removed. Easy days are heart-rate-led now: <b>the cap is the workout</b>.</p>
+    <div class="countbar" id="countbar"></div>
+    <div class="phases" id="phases"></div>
+  </details>
+</header>
+
+<div class="ctlbar">
+  <button type="button" id="theme-toggle" aria-label="Switch to light theme"><span class="ic" aria-hidden="true">☾</span><span class="lbl">Dark</span></button>
+  <button type="button" id="toggle-all" aria-pressed="true">Expand all sections</button>
+</div>
+
+<!-- TODAY -->
+<section class="today" id="today-panel">
+  <div class="today-inner" id="today-inner"></div>
+</section>
+
+<!-- PACE & HR -->
+<details class="card sec">
+  <summary><h2><span class="dot" style="background:var(--easy)"></span>Pace &amp; heart-rate reference — revised 12 Jun</h2><span class="chev2">›</span></summary>
+  <div class="secbody">
+  <p class="lead">Recalibrated from your June tempo and April interval data, deliberately on the conservative side — this block trains pacing discipline as much as fitness. On easy days <b>heart rate is the prescription and pace is just the expected outcome</b>; on quality days pace leads with an HR ceiling as the guard-rail.</p>
+  <div class="tscroll"><table class="ref">
+    <thead><tr><th>Session</th><th>Prescription</th><th>Guard-rail</th></tr></thead>
+    <tbody>
+      <tr><td>Recovery</td><td class="mono">HR ≤ 145 bpm</td><td>≈ 6:30–7:00 /km</td></tr>
+      <tr><td>Easy / run club / commutes</td><td class="mono">HR ≤ 150 bpm</td><td>≈ 6:00–6:40 /km · pick the 6:00 or 6:30 pace group, not 5:30</td></tr>
+      <tr><td>Long</td><td class="mono">HR ≤ 155 bpm avg</td><td>≈ 5:55–6:25 /km · prescribed steady finishes ≈ 5:25</td></tr>
+      <tr><td>Threshold / tempo</td><td class="mono">4:50–5:00 /km</td><td>HR ceiling 178 — if HR climbs past it mid-rep, ease off</td></tr>
+      <tr><td>Cruise intervals (1 km)</td><td class="mono">4:40–4:50 /km</td><td>HR ≤ 182 by final rep</td></tr>
+      <tr><td>Short reps (800 m)</td><td class="mono">4:35–4:45 /km</td><td>Last rep no faster than the first</td></tr>
+      <tr><td>Hill reps</td><td class="mono">5k effort uphill</td><td>Always jog the descents easy</td></tr>
+      <tr><td>Floats / sharpeners</td><td class="mono">5:05–5:15 /km</td><td>Crisp, controlled — not a tempo</td></tr>
+      <tr><td>Race guidance</td><td class="mono">5:05–5:25 /km</td><td>≈ 71–75 min — effort, not the clock; review after the 19 Jul race-pace long</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout warn"><span class="ico">△</span><span><b>Why slower easy paces than before:</b> your 7 Jun long run averaged 168 bpm — low Zone 4 by your Karvonen zones (Z2 ceiling 151). The old "easy 5:45–6:15" band produced Z3–Z4 every time. Run to the cap and let pace fall where it falls; it will come down on its own as fitness builds.</span></div>
+  <div class="callout warn"><span class="ico">△</span><span><b>Why faster quality paces:</b> 9 Jun you ran the "5:05–5:10 threshold" at 4:21/km with rep HR 181–189 — that's VO₂max work, not threshold. The new 4:50–5:00 band is genuine threshold for you. Hitting it will feel restrained. That's the point — the discipline transfers directly to not blowing up on Heartbreak Hill.</span></div>
+  <p class="lead" style="margin-top:8px">Karvonen zones (max 193 / rest 54): <span class="mono">Z1 124–137 · Z2 137–151 · Z3 151–165 · Z4 165–179 · Z5 179–193</span></p>
+</div>
+</details>
+
+<!-- PLAN -->
+<details class="card sec">
+  <summary><h2><span class="dot" style="background:var(--mod)"></span>The plan — W24 to race day</h2><span class="chev2">›</span></summary>
+  <div class="secbody">
+  <p class="lead">Tap any day for the full session. <b>Anchor</b> = fixed weekly point (Thursday run club) · <b>Quality</b> = hard session, never two on back-to-back days · <b>Key</b> = long run, important but movable.</p>
+  <div class="legend">
+    <span class="lg"><span class="sw" style="background:var(--hard)"></span>Quality (hard)</span>
+    <span class="lg"><span class="sw" style="background:var(--long)"></span>Long run</span>
+    <span class="lg"><span class="sw" style="background:var(--mod)"></span>Run club / steady</span>
+    <span class="lg"><span class="sw" style="background:var(--easy)"></span>Easy / recovery</span>
+    <span class="lg"><span class="sw" style="background:var(--str)"></span>Strength</span>
+    <span class="lg"><span class="sw" style="background:var(--rest)"></span>Rest / mobility</span>
+    <span class="lg"><span class="sw" style="background:var(--race)"></span>Race</span>
+  </div>
+  <div id="weeks"></div>
+</div>
+</details>
+
+<!-- DAILY ROUTINES -->
+<details class="card sec">
+  <summary><h2><span class="dot" style="background:var(--ocean)"></span>Daily routines — full instructions</h2><span class="chev2">›</span></summary>
+  <div class="secbody">
+  <p class="lead">The Today panel tells you <i>which</i> of these apply each day; this section is the <i>how</i>. The doubling-up is resolved by one rule: <b>each modality once per day — whichever session includes it ticks it off.</b> Wednesday's slow-eccentric calf raises count as that day's heel drops; any post-run hip-flexor stretch counts as that day's daily one.</p>
+
+  <details class="box"><summary>Eccentric heel drops — daily Achilles work <span class="chev">›</span></summary>
+  <div class="boxbody">
+    <p>Highest-leverage daily intervention for the Achilles. Do every day — <b>except Wednesday lower-strength days</b>, where the session's slow-eccentric calf raises are the day's dose. Evening is best; if morning, leave ≥30 min before running.</p>
+    <div class="callout info"><span class="ico">ⓘ</span><span><b>Setup:</b> forefoot on a step edge, heel hanging off. Hold a wall for balance. Do both variations every session — straight-leg first, then bent-knee.</span></div>
+    <div class="twin">
+      <div><b>Straight-leg (first)</b>Knee fully extended — loads the gastrocnemius, the large superficial calf muscle.</div>
+      <div><b>Bent-knee 20–30° (second)</b>Knee slightly bent — loads the soleus, the deeper calf. Critical for insertional issues.</div>
+    </div>
+    <p class="sub-title">The movement</p>
+    <ol class="steps">
+      <li>Rise onto tiptoes on both feet — about 1.5 s up</li>
+      <li>Shift weight entirely to the right leg</li>
+      <li>Lower the heel slowly over 3–4 s — below step level when able</li>
+      <li>A deep ache through the calf at the bottom is expected and fine</li>
+      <li>Rise back up on both feet — never push up one-legged from the bottom</li>
+      <li>All straight-leg reps first, then the full set bent-knee</li>
+    </ol>
+    <p class="sub-title">Progression</p>
+    <div class="tscroll"><table class="ref"><thead><tr><th>Stage</th><th>Setup</th><th>Sets × reps</th><th>Rule</th></tr></thead><tbody>
+      <tr><td>Stage 1</td><td>Double-leg, lower to flat only</td><td class="mono">3 × 12 each variation</td><td>Check next-morning baseline for worsening</td></tr>
+      <tr><td>Stage 2</td><td>Single-leg (right), flat only</td><td class="mono">3 × 10–12 each</td><td>Only advance if stage 1 raised no flags</td></tr>
+      <tr><td>Stage 3</td><td>Single-leg, 1–2 cm below step</td><td class="mono">3 × 12 each</td><td>Increase range gradually if tolerated</td></tr>
+      <tr><td>Target</td><td>Single-leg, full below-neutral</td><td class="mono">3 × 15 each</td><td>Long-term maintenance standard</td></tr>
+    </tbody></table></div>
+    <div class="callout ok"><span class="ico">✓</span><span>Up to 3–4/10 pain during the exercise is fine and doesn't predict harm. Next-day soreness returning to baseline within 24 h is acceptable.</span></div>
+    <div class="callout stop"><span class="ico">⚠</span><span><b>Stop signal:</b> pain escalating within a set, or next-morning baseline worse than the day before → drop back to double-leg for a few days.</span></div>
+    <div class="callout warn"><span class="ico">△</span><span><b>Which type?</b> Pinch the tendon upward from the heel bone. Tender at the heel bone = insertional — stay at flat-only until symptom-free 2+ weeks. Tender 3–5 cm up the tendon = mid-portion — progress below-neutral as scheduled.</span></div>
+  </div></details>
+
+  <details class="box"><summary>Hip flexor &amp; couch stretch <span class="chev">›</span></summary>
+  <div class="boxbody">
+    <p class="sub-title">Half-kneeling hip flexor — daily (post-run version counts)</p>
+    <p>Most important daily stretch for a desk-sitting runner. Tight hip flexors alter gait and shift load down the chain toward the Achilles. <b>On run days, doing it in the post-run stretches ticks it off — don't repeat it.</b></p>
+    <ol class="steps">
+      <li>Kneel on the right knee, left foot forward — left knee ~90°, foot flat</li>
+      <li>Critical first: squeeze the right glute and tuck the pelvis slightly under. Skip this and you'll arch the lower back instead of stretching the target.</li>
+      <li>Trunk tall, gently drive hips forward over the fixed knee</li>
+      <li>Feel it deep at the front of the right hip and groin — not the lower back</li>
+      <li>Hold 45–90 s — it deepens around the 20–30 s mark</li>
+      <li>Swap sides</li>
+    </ol>
+    <div class="callout ok"><span class="ico">✓</span><span><b>PNF option (more effective):</b> from the stretch, pull the rear knee forward into the floor for 5 s (isometric — nothing moves), relax, let it deepen. Repeat 2–3× per side.</span></div>
+    <p class="sub-title">Couch stretch — 3–4× per week</p>
+    <ol class="steps">
+      <li>Face away from a wall; right shin vertical up the wall, knee near the floor, top of foot on the wall</li>
+      <li>Left foot forward into a lunge, flat on the floor</li>
+      <li>Trunk tall and vertical — leaning forward kills the stretch</li>
+      <li>Start the knee 10–15 cm from the wall; work closer over weeks</li>
+      <li>Deep stretch in the front of the right thigh and hip</li>
+      <li>Hold 60–90 s per side</li>
+    </ol>
+    <div class="callout warn"><span class="ico">△</span><span>If the foot position bothers the Achilles, angle the foot slightly out of full plantarflexion.</span></div>
+  </div></details>
+
+  <details class="box"><summary>Before every run — dynamic warm-up (~3 min) <span class="chev">›</span></summary>
+  <div class="boxbody">
+    <p>All four movements, then straight into the easy warm-up jog — the jog is the cardiovascular warm-up; nothing extra needed.</p>
+    <ol class="steps">
+      <li><b>Ankle circles</b> — slow, deliberate circles at the ankle only, ~3–4 s per circle. 10 each direction, each foot.</li>
+      <li><b>Leg swings, front-to-back</b> — side-on to a wall, pendulum swing to ~waist height. Range grows naturally. 10–15 per leg.</li>
+      <li><b>Leg swings, side-to-side</b> — facing the wall, across the body then out. 10–15 per leg.</li>
+      <li><b>Pre-run calf raises</b> — flat ground (no step), 1.5 s up / 2 s down, no bounce. 10–15 reps. This is smooth activation, <i>not</i> the therapeutic heel drops — both stay.</li>
+    </ol>
+  </div></details>
+
+  <details class="box"><summary>After every run — static stretches (~8–10 min) <span class="chev">›</span></summary>
+  <div class="boxbody">
+    <p>The easy cooldown jog handles the cardiovascular side; these target warm muscle and tendon.</p>
+    <ol class="steps">
+      <li><b>Straight-leg calf stretch</b> — hands on wall, rear leg straight, heel flat, lean through the hips. 30–45 s per side.</li>
+      <li><b>Bent-knee soleus stretch</b> — same position, rear knee bent 20–30°, heel down. The more important of the two for the Achilles — don't skip. 30–45 s per side.</li>
+      <li><b>Hip flexor</b> — half-kneeling version (see above). <b>Counts as today's daily hip-flexor work.</b> 45–90 s per side.</li>
+      <li><b>Hamstring</b> — seated, one leg long, hinge from the hips with a long spine. 30–45 s per side.</li>
+      <li><b>Foam roll calves (optional)</b> — 60–90 s per calf, mainly as a diagnostic: a right calf consistently tighter than the left is an early Achilles warning.</li>
+    </ol>
+  </div></details>
+
+  <details class="box"><summary>Rest days — activation &amp; mobility (~15 min) <span class="chev">›</span></summary>
+  <div class="boxbody">
+    <p>On top of the daily heel drops and hip-flexor work. Under-activated glutes push compensatory stress down to the lower leg.</p>
+    <p class="sub-title">1 — Glute bridges · 3 × 15–20</p>
+    <ol class="steps">
+      <li>On your back, knees ~90°, feet flat hip-width — close enough to almost touch your heels</li>
+      <li>Squeeze the glutes <i>before</i> lifting — the step most people skip</li>
+      <li>Drive hips to a straight line knees→shoulders; no lower-back hyperextension</li>
+      <li>Hold 1–2 s at the top, actively squeezing</li>
+      <li>Lower over 2–3 s</li>
+    </ol>
+    <div class="callout info"><span class="ico">ⓘ</span><span>Progression: single-leg bridge when double-leg is easy — much harder and reveals left-right asymmetry.</span></div>
+    <p class="sub-title">2 — Clamshells · 2–3 × 15–20 per side</p>
+    <ol class="steps">
+      <li>On your side, hips stacked directly over each other — critical</li>
+      <li>Knees stacked, bent 45–60°, feet together</li>
+      <li>Pelvis completely still, rotate the top knee toward the ceiling — 2 s up, 2 s down</li>
+      <li>Shrink the range before you let the pelvis rotate — the most common fault</li>
+    </ol>
+    <div class="callout stop"><span class="ico">⚠</span><span>Wrong places to feel it: the very side of the hip (TFL taking over) or the inner thigh of the bottom leg. Right place: side/rear of the top hip.</span></div>
+    <p class="sub-title">3 — Foam roll, full body · ~8 min</p>
+    <p>60–90 s per area: calves (priority — note left/right difference), quads, hamstrings, glutes (ankle crossed over opposite knee, lean in).</p>
+    <p class="sub-title">4 — Couch stretch</p>
+    <p>If not already done today — 60–90 s each side.</p>
+  </div></details>
+</div>
+</details>
+
+<!-- ACHILLES -->
+<details class="card sec">
+  <summary><h2><span class="dot" style="background:var(--hard)"></span>Achilles watch — the non-negotiables</h2><span class="chev2">›</span></summary>
+  <div class="secbody">
+  <div class="boxbody" style="padding:4px 0 0">
+    <div class="callout ok"><span class="ico">✓</span><span><b>Traffic light.</b> 0–2/10 soreness fading within the run or a few hours → carry on. 3–4/10, or stiffness lingering &gt;24 h → swap the next quality run for easy or rest, halve calf-eccentric volume. Sharp pain, or morning heel-stiffness worsening week-on-week → stop running, see a physio.</span></div>
+    <div class="callout info"><span class="ico">ⓘ</span><span><b>Keep the eccentrics in.</b> The slow 3-second-down calf raises stay in every lower session, even in the taper (just lighter) — and the daily heel drops continue on every other day.</span></div>
+    <div class="callout info"><span class="ico">ⓘ</span><span><b>Uphill yes, downhill careful.</b> Hill reps load the Achilles less than fast downhills — always jog the descents.</span></div>
+    <div class="callout warn"><span class="ico">△</span><span><b>No volume spikes.</b> Week-to-week jumps stay ~10% with a built-in down week (W27). Walk the Thursday commutes on a tired week to shed load.</span></div>
+    <div class="callout info"><span class="ico">ⓘ</span><span><b>Shoes.</b> Cushioned Nimbus for easy/long days takes tension off the tendon; EVO SL only for quality. Pegasus stays the backup. Chuck 70s for the gym.</span></div>
+  </div>
+</div>
+</details>
+
+<!-- STRENGTH -->
+<details class="card sec">
+  <summary><h2><span class="dot" style="background:var(--str)"></span>Strength — machines, loads &amp; progression</h2><span class="chev2">›</span></summary>
+  <div class="secbody">
+  <p class="lead">Two sessions a week, placed so they never sabotage a run: <b>upper + core on Monday</b> (legs fresh for Tuesday quality), <b>lower + calves on Wednesday</b> (day after quality, four days clear of the long run). Each day tile shows that week's exact loads. New machines arrive at <b>no more than two per session</b>.</p>
+
+  <details class="box"><summary>Loading rules — written for 7 kg pin jumps <span class="chev">›</span></summary>
+  <div class="boxbody">
+    <ul>
+      <li><b>2 reps in reserve</b> on every working set. First session on any machine is for finding the working weight, not chasing it.</li>
+      <li><b>Reps before load.</b> The selectorised stacks move in verified <b>7 kg</b> steps — enormous jumps at starting loads (7→14 kg doubles the shoulder press). So: progress <span class="mono">3×8 → 3×10 → 3×12</span> at a pin. When 3×12 feels like 2-in-reserve two sessions running, go up one pin and drop back to 3×8.</li>
+      <li><b>DAP is the fine-grained tool</b> — 2.5 kg per-side steps (max 40 kg/side). Cable exercises can progress by load normally.</li>
+      <li><b>OSSP is counter-balanced</b> — actual starting resistance is lighter than the pin weight. If 7 kg feels unloaded, work up pin by pin in the first session until it's a true 2-in-reserve 10.</li>
+      <li><b>Dumbbell movements</b> (pullover, RDL, BSS) progress to the next dumbbell up when ready; the 10→20 kg gap is why these migrate to machines over time.</li>
+    </ul>
+  </div></details>
+
+  <details class="box"><summary>Equipment key — verified 10 Jun <span class="chev">›</span></summary>
+  <div class="boxbody">
+    <div class="tscroll"><table class="ref"><thead><tr><th>Machine</th><th>Code</th><th>Stack</th><th>Notes</th></tr></thead><tbody>
+      <tr><td>Chest Press</td><td class="mono">OSCP</td><td class="mono">7–91 kg · 7 kg steps</td><td>Primary horizontal press</td></tr>
+      <tr><td>Shoulder Press</td><td class="mono">OSSP</td><td class="mono">7–91 kg · 7 kg steps</td><td>Counter-balanced — starts lighter than pin weight</td></tr>
+      <tr><td>Bicep Curl</td><td class="mono">OSBC</td><td class="mono">7–63 kg · 7 kg steps</td><td>Self-aligning handles; set seat so upper arms sit flat on the pad</td></tr>
+      <tr><td>Dual Adjustable Pulley</td><td class="mono">OSDAP</td><td class="mono">2.5–40 kg/side · 2.5 kg steps</td><td>1-arm row (mid, D-ring) · OH triceps (high, rope) · Pallof (mid, D-ring)</td></tr>
+      <tr><td>Leg Press</td><td class="mono">OSLP</td><td class="mono">16–100 kg · 7 kg steps</td><td>Seated horizontal; no spinal compression</td></tr>
+      <tr><td>Leg Ext / Curl</td><td class="mono">OSLEC</td><td class="mono">7–91 kg · 7 kg steps</td><td><b>Not in programme</b> — prone leg curl loads the Achilles; revisit post-race</td></tr>
+      <tr><td>Adjustable Bench</td><td class="mono">OSADJ</td><td>—</td><td>Pullover, presses, step-ups</td></tr>
+      <tr><td>Free weights</td><td>—</td><td class="mono">DB 1–10 kg pairs + 1×20 kg pair</td><td>5 kg kettlebell · single 10 kg plate · no barbell</td></tr>
+    </tbody></table></div>
+  </div></details>
+
+  <details class="box"><summary>Machine introduction schedule — ≤2 new per session <span class="chev">›</span></summary>
+  <div class="boxbody">
+    <div class="tscroll"><table class="ref"><thead><tr><th>Week</th><th>New this session</th><th>Upper session size</th></tr></thead><tbody>
+      <tr><td>W25 · 15 Jun</td><td>Chest Press (OSCP) + 1-Arm Cable Row (DAP)</td><td>4 exercises — DB shoulder press stays familiar</td></tr>
+      <tr><td>W26 · 22 Jun</td><td>Shoulder Press (OSSP) + Bicep Curl (OSBC)</td><td>5 exercises</td></tr>
+      <tr><td>W27 · 29 Jun</td><td>— (deload, nothing new)</td><td>Light full-body</td></tr>
+      <tr><td>W28 · 6 Jul</td><td>DB Pullover + Cable OH Triceps (DAP)</td><td>7 exercises</td></tr>
+      <tr><td>W29 · 13 Jul</td><td>Pallof Press (DAP) — low-skill core move</td><td>Full 8 — peak loads</td></tr>
+    </tbody></table></div>
+    <p>Lower body stays on the movements you already know; the only additions are the single-leg calf raise (W25) and single-leg DB RDL (W26) — one per session.</p>
+    <div class="callout info"><span class="ico">ⓘ</span><span><b>Honest note on the muscle-building goal:</b> while a race and a tendon take priority, hypertrophy rides in the back seat — two weekly sessions maintain and slowly build. After City2Surf the emphasis can flip: 2–3 dedicated lifting days, running at maintenance. Worth writing up post-race.</span></div>
+  </div></details>
+</div>
+</details>
+
+<!-- FUELLING -->
+<details class="card sec">
+  <summary><h2><span class="dot" style="background:var(--long)"></span>Long-run fuelling — concrete dates</h2><span class="chev2">›</span></summary>
+  <div class="secbody">
+  <p class="lead">Practice schedule pinned to actual long runs so nothing is new on race day.</p>
+  <div class="tscroll"><table class="ref"><thead><tr><th>Long run</th><th>Practice</th></tr></thead><tbody>
+    <tr><td>Sun 14 Jun · 12 km</td><td>Water only — 2–3 sips (~100–150 ml) at ~35–40 min, sipping at pace without stopping</td></tr>
+    <tr><td>Sun 21 Jun · 13 km</td><td>Water only — same drill; it should feel less awkward already</td></tr>
+    <tr><td>Sun 28 Jun · 15 km</td><td><b>First gel</b> at 45–50 min, chased with 2–3 sips of water. Note how the stomach handles it.</td></tr>
+    <tr><td>Sun 5 Jul · 10 km (down week)</td><td>Water only — short run, no gel needed</td></tr>
+    <tr><td>Sun 12 Jul · 16 km</td><td><b>Full race rehearsal:</b> race-morning breakfast 2–3 h prior + gel at 45–50 min + water</td></tr>
+    <tr><td>Sun 19 Jul · 15 km race-pace</td><td>Gel at 45–50 min — practising fuelling at intensity</td></tr>
+    <tr><td>Sun 26 Jul · 14 km rehearsal</td><td><b>Full dress rehearsal:</b> wake-up time, breakfast, gear, fuel, warm-up — mirror race day exactly</td></tr>
+    <tr><td>Sun 2 Aug · 11 km</td><td>Water only — easy taper run</td></tr>
+  </tbody></table></div>
+  <div class="recipe">
+    <div class="rl">DIY gel — ~25 g carbs, ~5¢ each</div>
+    <div class="rr"><span class="ra">25 g</span><span>Table sugar (~1.5 heaped tbsp)</span></div>
+    <div class="rr"><span class="ra">25–30 ml</span><span>Warm water — dissolve the sugar fully first</span></div>
+    <div class="rr"><span class="ra">⅛ tsp</span><span>Table salt</span></div>
+    <div class="rr"><span class="ra">Optional</span><span>A few drops of lemon juice or diluted cordial</span></div>
+  </div>
+  <p class="lead">Mix, cool, transfer to a small silicone squeeze bottle or ziplock (bite a corner). <b>Upgrade:</b> 20 g maltodextrin + 5 g sugar + pinch of salt (Bulk Nutrients ~$8–10/kg) — lower osmolality, gentler on the gut. Sucrose's 1:1 glucose:fructose only matters above ~60 g/hr; at 25 g once, either works.</p>
+  <div class="callout info"><span class="ico">ⓘ</span><span><b>Carry gear:</b> Salomon Soft Flask 150 ml (~$20, Rebel Sport / Running Science CBD) — collapses flat, fits a shorts pocket. Interim: a 350 ml convenience-store bottle, drink half before starting. No vest needed under 90 min.</span></div>
+</div>
+</details>
+
+<!-- RACE DAY -->
+<details class="card sec">
+  <summary><h2><span class="dot" style="background:var(--race)"></span>Race day — Sun 9 Aug · Hyde Park → Bondi</h2><span class="chev2">›</span></summary>
+  <div class="secbody">
+  <div class="boxbody" style="padding:4px 0 0">
+    <div class="callout stop"><span class="ico">⚠</span><span><b>Rule: nothing new on race day.</b> No new shoes, no new gel, no unfamiliar breakfast.</span></div>
+    <p class="sub-title">Pre-race</p>
+    <ol class="steps">
+      <li>Normal, familiar breakfast 2–3 h before the start</li>
+      <li>Sip water through the morning — don't chug in the last 30 min</li>
+      <li>Gel in the shorts pocket; no bottle needed (stations every 2–3 km)</li>
+    </ol>
+    <p class="sub-title">On course</p>
+    <ol class="steps">
+      <li>~3 km station: 1–2 small sips</li>
+      <li>~6 km station: 2–3 sips — <b>take the gel at 45–50 min or the 6–7 km mark, whichever comes first.</b> Heartbreak Hill starts ~8.5 km and absorption takes 10–15 min: fuel must be on board <i>before</i> the hill.</li>
+      <li>Post-hill stations: ongoing small sips into the finish — controlled, not gulping, to cut stitch risk</li>
+    </ol>
+    <p class="sub-title">Heartbreak Hill</p>
+    <p style="color:var(--ink2);font-size:14px">Resist attacking it. Shorten the stride, keep cadence up, stay controlled — crest with enough left to run the back section home. Time is made on the descent and flat after the hill, not on the way up. Then let the final drop into Bondi run.</p>
+  </div>
+</div>
+</details>
+
+<!-- NUTRITION -->
+<details class="card sec">
+  <summary><h2><span class="dot" style="background:#7da935"></span>Daily nutrition — corrected for 58 kg</h2><span class="chev2">›</span></summary>
+  <div class="secbody">
+  <div class="boxbody" style="padding:4px 0 0">
+    <div class="callout ok"><span class="ico">✓</span><span><b>Protein: 105–130 g/day</b> (1.8–2.2 g/kg at 58 kg). Supports muscle repair and tendon collagen synthesis — tendons adapt slowly and need it daily. Three meals each with ~25–35 g of quality protein (chicken, fish, eggs, Greek yoghurt, legumes) plus incidentals gets there. <i>The previous guide assumed 75–80 kg — its 135–175 g target was an error for you.</i></span></div>
+    <div class="callout info"><span class="ico">ⓘ</span><span><b>Carbohydrates:</b> don't undereat them, especially on quality days — they're the running fuel. No benefit to restricting during a training block.</span></div>
+    <p class="sub-title">Pre-run</p>
+    <ol class="steps">
+      <li>Easy runs, fasted morning: fine as-is, no food needed</li>
+      <li>Quality sessions: small snack 60–90 min before — banana or toast</li>
+    </ol>
+    <p class="sub-title">Post-run — within 30–60 min</p>
+    <ol class="steps">
+      <li>20–40 g protein + carbs — milk and fruit, or Greek yoghurt and banana, is enough</li>
+      <li>Matters most after quality and long runs</li>
+    </ol>
+    <div class="callout warn"><span class="ico">△</span><span><b>Sleep:</b> 7–9 h, consistent times — adaptation happens during sleep, not during the runs. Hard sessions after 7 pm can delay sleep onset; easy treadmill at 8 pm is fine, intervals or tempo late are worth avoiding.</span></div>
+    <p style="color:var(--ink2);font-size:14px"><b>Body composition note:</b> at 58 kg and early-stage strength training, solid gains are achievable near maintenance calories — but only if the protein target is met consistently. While City2Surf is the priority: fuel for running first.</p>
+  </div>
+</div>
+</details>
+
+<footer>Plan revised 12 Jun 2026 · paces conservative by design · auto-regulate to how the body responds — a map, not a contract.</footer>
+</div>
+
+<script>
+const ACCENT={rest:'var(--rest)',easy:'var(--easy)',mod:'var(--mod)',hard:'var(--hard)',long:'var(--long)',strU:'var(--str)',strL:'var(--str)',race:'var(--race)'};
+const DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+/* routine sets — de-dup encoded. key: which checklist a day gets */
+const ROUTINES={"run": [["Pre-run dynamic warm-up", "Ankle circles · leg swings ×2 · smooth calf raises — ~3 min, then straight into the WU jog"], ["The session", "Details above — easy days: the HR cap is the workout"], ["Post-run stretches", "Calf · soleus · hip flexor · hamstring — ~8–10 min. The hip flexor here counts as today's daily one."], ["Eccentric heel drops (evening)", "Both variations, per your current progression stage"]], "strU": [["Upper + core session", "Loads in the table above — 2 reps in reserve, every set"], ["Eccentric heel drops (evening)", "No run today, so the daily dose still applies"], ["Hip flexor stretch", "45–90 s per side — half-kneeling, glute squeeze first"], ["Couch stretch (optional)", "One of this week's 3–4 — good day for it"]], "strL": [["Lower + calves session", "The slow-eccentric calf raises in this session ARE today's heel drops — don't double up"], ["Hip flexor stretch", "45–90 s per side"]], "rest": [["Eccentric heel drops", "Both variations, per progression stage"], ["Hip flexor stretch", "45–90 s per side"], ["Glute bridges", "3 × 15–20 — squeeze before lifting"], ["Clamshells", "2–3 × 15–20 per side — pelvis dead still"], ["Foam roll", "~8 min: calves (note left vs right), quads, hamstrings, glutes"], ["Couch stretch", "60–90 s per side"]], "race": [["Breakfast 2–3 h before the start", "Familiar food only — nothing new today"], ["Light dynamic warm-up", "Ankle circles + a few leg swings near the start pen"], ["Gel in the shorts pocket", "Take at 45–50 min or 6–7 km — before Heartbreak Hill"], ["Race — effort, not the clock", "Easy first 3 km · controlled up the hill · let the descent to Bondi run"]]};
+
+/* strength table helpers */
+const LO_CORE=[['Copenhagen Plank','3 × 30 s / side'],['Dead Bug','3 × 10 BW']];
+function S(rows){return rows.map(r=>({ex:r[0],d:r[1],n:!!r[2]}));}
+
+const WEEKS=[{"id": "W24", "phase": "build", "dates": "8–14 Jun", "focus": "Re-establish structure; first tempo of the block. Mon–Thu complete.", "km": "~35 km", "days": [{"date": "2026-06-08", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strU", "t": "strU", "title": "Strength · Upper + Core", "meta": "Done", "q": 0, "anchor": 0, "fixed": 0, "done": 1, "body": "<b>✓ Completed.</b> Floor Press 3×10@8 · 1-Arm Row 3×10@10 · Shoulder Press 3×10@6/5/4 · Plank 3×40s.", "str": []}, {"date": "2026-06-09", "shoe": "Adizero EVO SL", "note": "", "move": "", "routine": "run", "t": "hard", "title": "Tempo run", "meta": "Done · 7.85 km", "q": 1, "anchor": 0, "fixed": 0, "done": 1, "body": "<b>✓ Completed.</b> 4 km @4:21/km, rep HR 181–189. Next tempo: 4:50–5:00, HR cap 178."}, {"date": "2026-06-10", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strL", "t": "strL", "title": "Strength · Lower + Calves", "meta": "Done", "q": 0, "anchor": 0, "fixed": 0, "done": 1, "body": "<b>✓ Completed.</b> Leg Press 3×8@37 (first) · DB RDL 3×8@10 · BSS 3×8 BW · calf/Copenhagen/dead bug. Achilles ok. LP→44 next.", "str": []}, {"date": "2026-06-11", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "Done · 10.32 km", "q": 0, "anchor": 1, "fixed": 0, "done": 1, "body": "<b>✓ Completed.</b> Club run HR 142 / return 144 (good); outbound 164 (over). Target: all legs ≤150."}, {"date": "2026-06-12", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "Done", "q": 0, "anchor": 0, "fixed": 0, "done": 1, "body": "<b>✓ Completed.</b> Rest day completed."}, {"date": "2026-06-13", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "Done · 5.87 km", "q": 0, "anchor": 0, "fixed": 0, "done": 1, "body": "<b>✓ Completed.</b> 5.87 km, HR 152/180, 7:14/km. km2 HR 160 — slowed km3–5. Achilles ok."}, {"date": "2026-06-14", "shoe": "Gel Nimbus 26", "note": "Counts as a hard day for spacing.", "move": "", "routine": "run", "t": "long", "title": "Long run", "meta": "Done · 12.36 km", "q": 0, "anchor": 0, "fixed": 0, "done": 1, "body": "<b>✓ Completed.</b> 12.36 km, HR 149/167, 7:32/km. Mild rain. 100 ml flask at ~6 km, no GI issues."}]}, {"id": "W25", "phase": "build", "dates": "15–21 Jun", "focus": "Machines arrive (2 new) + first real hill reps — City2Surf is won on the climbs.", "km": "~36 km", "days": [{"date": "2026-06-15", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strU", "t": "strU", "title": "Strength · Upper + Core", "meta": "Done", "q": 0, "anchor": 0, "fixed": 0, "done": 1, "body": "<b>✓ Completed.</b> OSCP 3×8@14/21/21 (~3 RIR) · Cable Row 7.5/7.5/5 (failure set 2) · Shoulder Press at failure · Copenhagen 2×25s.", "str": []}, {"date": "2026-06-16", "shoe": "Adizero EVO SL", "note": "Uphill is Achilles-friendlier than fast flats — jog every descent.", "move": "", "routine": "run", "t": "hard", "title": "Hill reps", "meta": "Done · 7 km", "q": 1, "anchor": 0, "fixed": 0, "done": 1, "body": "<b>✓ Completed.</b> 5 effective reps (recording issue wasted the first, folded into WU)."}, {"date": "2026-06-17", "shoe": "Converse Chuck 70s", "note": "", "move": "If yesterday's hills left the calves tender, halve the calf volume.", "routine": "strL", "t": "strL", "title": "Strength · Lower + Calves", "meta": "~70 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Leg press up one pin to <b>44 kg</b>. First single-leg calf set — the session's one new element.", "str": [{"ex": "Leg Press", "d": "3 × 8 @ 44 kg", "n": false}, {"ex": "Romanian Deadlift", "d": "3 × 8 @ 10 kg/hand", "n": false}, {"ex": "Bulgarian Split Squat", "d": "3 × 8/leg @ 6 kg/hand", "n": false}, {"ex": "Calf Raise — Slow Eccentric", "d": "3 × 15 BW", "n": true}, {"ex": "Copenhagen Plank", "d": "3 × 35 s/side BW", "n": false}, {"ex": "Dead Bug", "d": "3 × 12 BW", "n": false}], "guide": "W25_Lower_Calves_2026-06-17.html"}, {"date": "2026-06-18", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "10.2 km", "q": 0, "anchor": 1, "fixed": 0, "done": 0, "body": "Run club — <b>every leg under HR 150</b>, including the outbound commute. 6:00 or 6:30 group."}, {"date": "2026-06-19", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest. Rest-day routine + calf/ankle mobility."}, {"date": "2026-06-20", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "6.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "6 km @ HR ≤150 + 4×20 s strides."}, {"date": "2026-06-21", "shoe": "Gel Nimbus 26", "note": "Counts as a hard day for spacing.", "move": "Movable to Saturday.", "routine": "run", "t": "long", "title": "Long run", "meta": "13.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "<b>13 km, HR ≤155 avg</b>, a few gentle rises. Water practice again."}]}, {"id": "W26", "phase": "build", "dates": "22–28 Jun", "focus": "Threshold development + longest long of the build. Two more machines.", "km": "~40 km", "days": [{"date": "2026-06-22", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strU", "t": "strU", "title": "Strength · Upper + Core", "meta": "~50 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "<b>Two new machines</b> — Shoulder Press (OSSP) and Bicep Curl (OSBC), both counter-balanced. Reps before pins on OSCP and the row.", "str": [{"ex": "Machine Chest Press", "d": "3 × 10–12 @ 14 kg", "n": false}, {"ex": "Single-Arm Cable Row", "d": "3 × 10/side @ 7.5 kg", "n": false}, {"ex": "Machine Shoulder Press", "d": "3 × 10 @ 7 kg — calibrate", "n": true}, {"ex": "Machine Bicep Curl", "d": "2 × 12 @ 7 kg — calibrate", "n": true}, {"ex": "Front Plank", "d": "3 × 45 s BW", "n": false}], "guide": "W26_Upper_Core_2026-06-22.html"}, {"date": "2026-06-23", "shoe": "Adizero EVO SL", "note": "Biggest aerobic session so far — eat beforehand.", "move": "", "routine": "run", "t": "hard", "title": "Intervals", "meta": "10.0 km", "q": 1, "anchor": 0, "fixed": 0, "done": 0, "body": "2 km WU → <b>5×1 km @4:40–4:50</b> w/ 90 s jog → 1.5 km CD. HR ≤182 by the final rep."}, {"date": "2026-06-24", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strL", "t": "strL", "title": "Strength · Lower + Calves", "meta": "~70 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "<b>The RDL goes single-leg.</b> Leg Press to 3×10, calf raises now all single-leg.", "str": [{"ex": "Leg Press", "d": "3 × 10 @ 44 kg", "n": false}, {"ex": "Single-Leg Romanian Deadlift", "d": "3 × 8/leg @ 8–10 kg", "n": true}, {"ex": "Bulgarian Split Squat", "d": "3 × 9/leg @ 8 kg/hand", "n": false}, {"ex": "Calf Raise — Slow Eccentric", "d": "3 × 12/side BW", "n": false}, {"ex": "Copenhagen Plank", "d": "3 × 40 s/side BW", "n": false}, {"ex": "Dead Bug", "d": "3 × 12 BW", "n": false}], "guide": "W26_Lower_Calves_2026-06-24.html"}, {"date": "2026-06-25", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "10.2 km", "q": 0, "anchor": 1, "fixed": 0, "done": 0, "body": "Run club — all legs HR ≤150."}, {"date": "2026-06-26", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest + mobility."}, {"date": "2026-06-27", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "5.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "5 km @ HR ≤150 + strides."}, {"date": "2026-06-28", "shoe": "Gel Nimbus 26", "note": "Counts as a hard day.", "move": "Movable to Saturday.", "routine": "run", "t": "long", "title": "Long run", "meta": "15.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "<b>15 km, HR ≤155 avg</b>, rolling, last 3 km steady (~5:25). Longest of the build. <b>First gel</b> at 45–50 min + water."}]}, {"id": "W27", "phase": "down", "dates": "29 Jun–5 Jul", "focus": "Down week — absorb the load; reduced long, light deload.", "km": "~30 km", "days": [{"date": "2026-06-29", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strL", "t": "strL", "title": "Strength · Full Body", "meta": "~35 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Deload full-body — nothing new. Skip if run-down.", "str": [{"ex": "Leg Press", "d": "2 × 8 @ 37 kg", "n": false}, {"ex": "Romanian Deadlift", "d": "2 × 8 @ 10 kg/hand", "n": false}, {"ex": "Machine Chest Press", "d": "2 × 10 @ 14 kg", "n": false}, {"ex": "Single-Arm Cable Row", "d": "2 × 10/side @ 7.5 kg", "n": false}, {"ex": "Calf Raise — Slow Eccentric", "d": "2 × 15 BW", "n": false}, {"ex": "Dead Bug", "d": "2 × 10 BW", "n": false}], "guide": "W27_Full_Body_2026-06-29.html"}, {"date": "2026-06-30", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "hard", "title": "Fartlek", "meta": "6.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "6 km easy w/ <b>6×1 min floats</b> @5:05–5:15, 1 min easy between."}, {"date": "2026-07-01", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest, or optional 4 km very easy + mobility."}, {"date": "2026-07-02", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "10.2 km", "q": 0, "anchor": 1, "fixed": 0, "done": 0, "body": "Run club — <b>walk both commutes</b> this week to shed load."}, {"date": "2026-07-03", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest."}, {"date": "2026-07-04", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "5.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "5 km @ HR ≤150 + 4×20 s strides."}, {"date": "2026-07-05", "shoe": "Gel Nimbus 26", "note": "", "move": "Movable to Saturday.", "routine": "run", "t": "long", "title": "Long run", "meta": "10.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Reduced <b>10 km easy, HR ≤150</b>. Water only."}]}, {"id": "W28", "phase": "spec", "dates": "6–12 Jul", "focus": "Race-specific work + longest run (16 km) + full fuel rehearsal.", "km": "~40 km", "days": [{"date": "2026-07-06", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strU", "t": "strU", "title": "Strength · Upper + Core", "meta": "~50 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Two new — <b>DB Pullover</b> and <b>cable overhead triceps</b>. OSCP to 21 kg only if 3×12@14 was 2 RIR.", "str": [{"ex": "Machine Chest Press", "d": "3 × 8–12 @ 14–21 kg", "n": false}, {"ex": "Single-Arm Cable Row", "d": "3 × 8/side @ 10 kg", "n": false}, {"ex": "Machine Shoulder Press", "d": "3 × 8–10 @ calibrated pin", "n": false}, {"ex": "Dumbbell Pullover", "d": "3 × 12 @ 10 kg", "n": true}, {"ex": "Machine Bicep Curl", "d": "3 × 10 @ 7 kg", "n": false}, {"ex": "Overhead Cable Triceps Extension", "d": "3 × 10 @ 10 kg", "n": true}, {"ex": "Front Plank", "d": "3 × 50 s BW", "n": false}], "guide": "W28_Upper_Core_2026-07-06.html"}, {"date": "2026-07-07", "shoe": "Adizero EVO SL", "note": "", "move": "", "routine": "run", "t": "hard", "title": "Hill reps", "meta": "8.0 km", "q": 1, "anchor": 0, "fixed": 0, "done": 0, "body": "2 km WU → <b>8×75 s strong uphill</b> (jog down) → 1.5 km CD. Heartbreak Hill sim."}, {"date": "2026-07-08", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strL", "t": "strL", "title": "Strength · Lower + Calves", "meta": "~70 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Leg Press to 51 kg if 3×10@44 was comfortable.", "str": [{"ex": "Leg Press", "d": "3 × 8 @ 51 kg", "n": false}, {"ex": "Single-Leg Romanian Deadlift", "d": "3 × 8/leg @ 10 kg", "n": false}, {"ex": "Bulgarian Split Squat", "d": "3 × 10/leg @ 8 kg/hand", "n": false}, {"ex": "Calf Raise — Slow Eccentric", "d": "3 × 12/side BW", "n": false}, {"ex": "Copenhagen Plank", "d": "3 × 40 s/side BW", "n": false}, {"ex": "Dead Bug", "d": "3 × 12 BW", "n": false}], "guide": "W28_Lower_Calves_2026-07-08.html"}, {"date": "2026-07-09", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "10.2 km", "q": 0, "anchor": 1, "fixed": 0, "done": 0, "body": "Run club — HR ≤150 every leg."}, {"date": "2026-07-10", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest + mobility."}, {"date": "2026-07-11", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "6.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "6 km @ HR ≤150 + strides."}, {"date": "2026-07-12", "shoe": "Gel Nimbus 26", "note": "Counts as a hard day.", "move": "Movable to Saturday.", "routine": "run", "t": "long", "title": "Long run", "meta": "16.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "<b>Longest — 16 km, HR ≤155 avg</b>, rolling/hilly, last 3 km steady. <b>Full fuel rehearsal:</b> breakfast + gel + water."}]}, {"id": "W29", "phase": "spec", "dates": "13–19 Jul", "focus": "Peak — threshold + race-pace long. Final fully-loaded strength.", "km": "~38 km", "days": [{"date": "2026-07-13", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strU", "t": "strU", "title": "Strength · Upper + Core", "meta": "~50 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Full eight — adds <b>Pallof press</b>. Peak loads; pin up where a full rep was spare.", "str": [{"ex": "Machine Chest Press", "d": "3 × 8–12 @ 14–21 kg", "n": false}, {"ex": "Single-Arm Cable Row", "d": "3 × 8/side @ 20 kg", "n": false}, {"ex": "Machine Shoulder Press", "d": "3 × 8 @ pin", "n": false}, {"ex": "Dumbbell Pullover", "d": "3 × 12 @ 10 kg", "n": false}, {"ex": "Machine Bicep Curl", "d": "3 × 10–12 @ 7 kg", "n": false}, {"ex": "Overhead Cable Triceps Extension", "d": "3 × 10 @ 12.5 kg", "n": false}, {"ex": "Pallof Press", "d": "3 × 10/side @ 5 kg", "n": true}, {"ex": "Front Plank", "d": "3 × 60 s BW", "n": false}]}, {"date": "2026-07-14", "shoe": "Adizero EVO SL", "note": "Drop the last rep if legs are heavy.", "move": "", "routine": "run", "t": "hard", "title": "Intervals", "meta": "9.5 km", "q": 1, "anchor": 0, "fixed": 0, "done": 0, "body": "2 km WU → <b>2×2 km @4:50–5:00 (3 min jog) + 1×1 km @~4:45</b> → 1.5 km CD. HR cap 178 on 2 km reps."}, {"date": "2026-07-15", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strL", "t": "strL", "title": "Strength · Lower + Calves", "meta": "~70 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Last fully-loaded lower session. Leg Press 4×6@58 (or stay 51).", "str": [{"ex": "Leg Press", "d": "4 × 6 @ 58 kg", "n": false}, {"ex": "Single-Leg Romanian Deadlift", "d": "3 × 8/leg @ 10 kg", "n": false}, {"ex": "Bulgarian Split Squat", "d": "3 × 8/leg @ 10 kg/hand", "n": false}, {"ex": "Calf Raise — Slow Eccentric", "d": "3 × 12/side BW", "n": false}, {"ex": "Copenhagen Plank", "d": "3 × 45 s/side BW", "n": false}, {"ex": "Dead Bug", "d": "3 × 12 BW", "n": false}]}, {"date": "2026-07-16", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "10.2 km", "q": 0, "anchor": 1, "fixed": 0, "done": 0, "body": "Run club — HR ≤150."}, {"date": "2026-07-17", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest + mobility."}, {"date": "2026-07-18", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "6.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "6 km @ HR ≤150 + strides. Genuinely gentle — race-pace long tomorrow."}, {"date": "2026-07-19", "shoe": "Gel Nimbus 26", "note": "This long run IS a quality session.", "move": "Movable to Saturday.", "routine": "run", "t": "long", "title": "Long run", "meta": "15.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "<b>Race-pace long:</b> 4 km easy + 6 km @5:10–5:20 (rolling) + 4 km easy + 1 km CD. Gel at 45–50 min. Review the race band after this."}]}, {"id": "W30", "phase": "spec", "dates": "20–26 Jul", "focus": "Final big week — leg speed + the full City2Surf dress rehearsal.", "km": "~37 km", "days": [{"date": "2026-07-20", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strU", "t": "strU", "title": "Strength · Upper + Core", "meta": "~50 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Upper (lighter) — 2 sets across the full 8 at peak-week loads. Maintain, don't fatigue.", "str": [{"ex": "Machine Chest Press", "d": "2 × 10 @ pin", "n": false}, {"ex": "Single-Arm Cable Row", "d": "2 × 10/side @ 17.5 kg", "n": false}, {"ex": "Machine Shoulder Press", "d": "2 × 10 @ pin", "n": false}, {"ex": "Dumbbell Pullover", "d": "2 × 12 @ 10 kg", "n": false}, {"ex": "Machine Bicep Curl", "d": "2 × 12 @ 7 kg", "n": false}, {"ex": "Overhead Cable Triceps Extension", "d": "2 × 12 @ 10 kg", "n": false}, {"ex": "Pallof Press", "d": "2 × 12/side @ 5 kg", "n": false}, {"ex": "Front Plank", "d": "2 × 45 s BW", "n": false}]}, {"date": "2026-07-21", "shoe": "Adizero EVO SL", "note": "", "move": "", "routine": "run", "t": "hard", "title": "Intervals", "meta": "8.0 km", "q": 1, "anchor": 0, "fixed": 0, "done": 0, "body": "2 km WU → <b>5×800 m @4:35–4:45</b> w/ 90 s jog → 1.5 km CD. Last rep no faster than the first."}, {"date": "2026-07-22", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strL", "t": "strL", "title": "Strength · Lower + Calves", "meta": "~70 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Lower (lighter) — keep the calf eccentrics, ease everything else.", "str": [{"ex": "Leg Press", "d": "2 × 8 @ 44 kg", "n": false}, {"ex": "Single-Leg Romanian Deadlift", "d": "2 × 8/leg @ 10 kg", "n": false}, {"ex": "Bulgarian Split Squat", "d": "2 × 8/leg BW", "n": false}, {"ex": "Calf Raise — Slow Eccentric", "d": "2 × 15 BW", "n": false}, {"ex": "Copenhagen Plank", "d": "2 × 30 s/side BW", "n": false}, {"ex": "Dead Bug", "d": "2 × 10 BW", "n": false}]}, {"date": "2026-07-23", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "10.2 km", "q": 0, "anchor": 1, "fixed": 0, "done": 0, "body": "Run club — HR ≤150."}, {"date": "2026-07-24", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest + mobility."}, {"date": "2026-07-25", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "5.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "5 km @ HR ≤150 + strides."}, {"date": "2026-07-26", "shoe": "Gel Nimbus 26 / Adizero EVO SL", "note": "Most race-like session — counts as hard.", "move": "Movable to Saturday.", "routine": "run", "t": "long", "title": "Long run", "meta": "14.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "<b>City2Surf rehearsal:</b> hilly 14 km progressive — easy first 5 km, build on the climbs, strong last 3 km. Full dress rehearsal."}]}, {"id": "W31", "phase": "taper", "dates": "27 Jul–2 Aug", "focus": "Taper — volume drops, sharpness stays.", "km": "~28 km", "days": [{"date": "2026-07-27", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strL", "t": "strL", "title": "Strength · Full Body", "meta": "~35 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "<b>Last real strength session.</b> Light loads, nothing soreness-inducing. Calf eccentrics stay.", "str": [{"ex": "Leg Press", "d": "2 × 8 @ 37 kg", "n": false}, {"ex": "Romanian Deadlift", "d": "2 × 8 @ 10 kg/hand", "n": false}, {"ex": "Machine Chest Press", "d": "2 × 10 @ 14 kg", "n": false}, {"ex": "Single-Arm Cable Row", "d": "2 × 10/side @ 12.5 kg", "n": false}, {"ex": "Calf Raise — Slow Eccentric", "d": "2 × 15 BW", "n": false}, {"ex": "Dead Bug", "d": "2 × 10 BW", "n": false}]}, {"date": "2026-07-28", "shoe": "Adizero EVO SL", "note": "", "move": "", "routine": "run", "t": "hard", "title": "Intervals", "meta": "8.0 km", "q": 1, "anchor": 0, "fixed": 0, "done": 0, "body": "1.5 km WU → <b>5×3 min @5:05–5:15</b> w/ 90 s jog → 1.5 km CD. Crisp, not deep."}, {"date": "2026-07-29", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest, or optional 4 km very easy + mobility."}, {"date": "2026-07-30", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "7.0 km", "q": 0, "anchor": 1, "fixed": 0, "done": 0, "body": "Run club — short &amp; easy; consider walking commutes. Skip if feeling the taper."}, {"date": "2026-07-31", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest."}, {"date": "2026-08-01", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "5.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "5 km @ HR ≤150 + 4×20 s strides."}, {"date": "2026-08-02", "shoe": "Gel Nimbus 26", "note": "", "move": "Movable to Saturday.", "routine": "run", "t": "long", "title": "Long run", "meta": "11.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Reduced <b>11 km easy, HR ≤150</b>. Banking freshness. Water only."}]}, {"id": "W32", "phase": "race", "dates": "3–9 Aug", "focus": "RACE WEEK — stay loose, stay rested. Run club skipped.", "km": "race week", "days": [{"date": "2026-08-03", "shoe": "Converse Chuck 70s", "note": "", "move": "", "routine": "strL", "t": "strL", "title": "Strength · Activation", "meta": "~20 min", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Activation only — bodyweight movement quality, nothing that leaves soreness. Skip if you'd rather rest.", "str": [{"ex": "Bodyweight Squat", "d": "2 × 12 BW", "n": false}, {"ex": "Glute Bridge", "d": "2 × 15 BW", "n": false}, {"ex": "Calf Raise (easy)", "d": "2 × 15 BW", "n": false}, {"ex": "Band Pull-Apart", "d": "2 × 15", "n": false}, {"ex": "Dead Bug", "d": "2 × 10 BW", "n": false}, {"ex": "Front Plank", "d": "2 × 30 s BW", "n": false}]}, {"date": "2026-08-04", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "5.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "5 km @ HR ≤150 + 4×20 s strides to keep the legs awake."}, {"date": "2026-08-05", "shoe": "Adizero EVO SL", "note": "", "move": "", "routine": "run", "t": "hard", "title": "Intervals", "meta": "6.0 km", "q": 1, "anchor": 0, "fixed": 0, "done": 0, "body": "1.5 km WU → <b>4×90 s @ goal race effort</b> w/ 90 s easy → 1 km CD. Last quality touch."}, {"date": "2026-08-06", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Skip run club. Optional 4 km shakeout only, commutes walked."}, {"date": "2026-08-07", "shoe": "", "note": "", "move": "", "routine": "rest", "t": "rest", "title": "Rest + Mobility", "meta": "", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Rest + light mobility. Top up carbs, hydration, sleep."}, {"date": "2026-08-08", "shoe": "Gel Nimbus 26", "note": "", "move": "", "routine": "run", "t": "easy", "title": "Easy run", "meta": "4.0 km", "q": 0, "anchor": 0, "fixed": 0, "done": 0, "body": "Pre-race primer: 4 km very easy + 3×20 s strides, or full rest. Lay out gear; check wave/start time."}, {"date": "2026-08-09", "shoe": "Adizero EVO SL", "note": "Trust the work — out conservatively, finish strong.", "move": "", "routine": "race", "t": "race", "title": "🏁 City2Surf", "meta": "14.0 km", "q": 0, "anchor": 0, "fixed": 1, "done": 0, "body": "<b>City2Surf 14 km</b> — effort, not the clock (~5:05–5:25/km, ~71–75 min). Easy first 3 km, controlled up Heartbreak Hill, gel by 45–50 min or 6–7 km, let the descent to Bondi run."}]}];
+
+const ROUTINE_LABEL={run:'Run day',strU:'Strength day (upper)',strL:'Strength day (lower)',rest:'Rest day',race:'Race day'};
+
+function el(tag,cls,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
+function pad(n){return n<10?'0'+n:''+n}
+function todayISO(){const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function fmtDate(iso){const d=new Date(iso+'T12:00:00');return DOW[(d.getDay()+6)%7]+' '+d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];}
+
+/* safe storage — degrades gracefully if storage unavailable */
+const store={
+  get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+  set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+};
+
+function guideLink(g){return '<a class="guidelink" href="'+g+'">Open guide \u2192</a>';}
+function strTable(rows){
+  return '<table class="strtable">'+rows.map(r=>`<tr${r.n?' class="new"':''}><td>${r.ex}</td><td>${r.d}</td></tr>`).join('')+'</table>';
+}
+
+/* ---- header pills + phases ---- */
+(function(){
+  const race=new Date('2026-08-09T08:00:00+10:00');
+  const days=Math.max(0,Math.round((race-new Date())/86400000));
+  const cb=document.getElementById('countbar');
+  [['Days to race',days],['Runs / wk',4],['Strength / wk',2],['Peak long','16 km'],['Race band','5:05–5:25']].forEach(([l,n])=>{
+    const p=el('div','pill');p.appendChild(el('span','n',n));p.appendChild(el('span','l',l));cb.appendChild(p);
+  });
+  const ph=document.getElementById('phases');
+  [['build','W24–26','Base & hills'],['down','W27','Down week'],['spec','W28–30','Race-specific'],['taper','W31','Taper'],['race','W32','Race week']].forEach(([c,w,t])=>{
+    const d=el('div','ph '+c);d.appendChild(el('b',null,w));d.appendChild(el('span',null,t));ph.appendChild(d);
+  });
+})();
+
+/* ---- TODAY panel (with prev/next day navigation) ---- */
+(function(){
+  const inner=document.getElementById('today-inner');
+  const panel=document.getElementById('today-panel');
+  if(!inner)return;
+
+  /* flat date -> day lookup; plan window bounds */
+  const BY_ISO={};
+  WEEKS.forEach(wk=>wk.days.forEach(d=>{BY_ISO[d.date]=d;}));
+  const PLAN_START='2026-06-08', PLAN_END='2026-08-09';
+  const realToday=todayISO();
+  const todayInWindow = realToday>=PLAN_START && realToday<=PLAN_END;
+
+  function shiftISO(iso,n){
+    const d=new Date(iso+'T12:00:00'); d.setDate(d.getDate()+n);
+    return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  }
+  const clampISO=iso=> iso<PLAN_START?PLAN_START : iso>PLAN_END?PLAN_END : iso;
+  let cur=clampISO(realToday);
+
+  function navBar(iso){
+    const isToday=iso===realToday;
+    const prevDis=iso<=PLAN_START?' disabled':'';
+    const nextDis=iso>=PLAN_END?' disabled':'';
+    const lead=isToday?`<span class="live"></span>Today · ${fmtDate(iso)}`:fmtDate(iso);
+    const todayBtn=(!isToday && todayInWindow)
+      ? `<button type="button" class="tnav-today" id="tnav-today">Today</button>` : '';
+    return `<div class="tnav">
+        <button type="button" class="tnav-btn" id="tnav-prev" aria-label="Previous day"${prevDis}>\u2039</button>
+        <div class="tk tnav-label">${lead}</div>
+        <button type="button" class="tnav-btn" id="tnav-next" aria-label="Next day"${nextDis}>\u203a</button>
+        ${todayBtn}
+      </div>`;
+  }
+
+  function render(iso){
+    cur=iso;
+    const day=BY_ISO[iso];
+    let html=navBar(iso);
+    if(!day){
+      const post=iso>PLAN_END;
+      html+=`<h2>${post?'Race done — recover well':'Outside the plan window'}</h2>
+        <p class="tbody">${post?'Easy walking and sleep this week.':'The plan runs 8 Jun – 9 Aug 2026.'}</p>`;
+      inner.innerHTML=html; wire(); return;
+    }
+    let chips=`<div class="tchips">`;
+    if(day.shoe)chips+=`<span class="tchip shoe">${day.shoe}</span>`;
+    chips+=`<span class="tchip">${ROUTINE_LABEL[day.routine]}</span>`;
+    if(day.q)chips+=`<span class="tchip" style="color:var(--hard)">Quality</span>`;
+    if(day.anchor)chips+=`<span class="tchip" style="color:var(--mod)">Anchor</span>`;
+    chips+=`</div>`;
+    html+=`<h2>${day.title}${day.meta?` <span style="color:var(--ink3);font-size:.55em">· ${day.meta}</span>`:''}</h2>
+      <div class="tbody">${day.body}</div>${chips}`;
+    if(day.str)html+=strTable(day.str);
+    if(day.guide)html+=guideLink(day.guide);
+    const items=ROUTINES[day.routine]||[];
+    if(items.length){
+      const clh=iso===realToday?'Today\u2019s checklist — doubling-up already removed'
+                               :'Checklist — doubling-up already removed';
+      html+=`<div class="checklist"><div class="clh">${clh}</div>`;
+      items.forEach((it,i)=>{
+        const key='c2s-'+iso+'-'+i;
+        const checked=store.get(key)==='1'?' checked':'';
+        html+=`<label class="ck"><input type="checkbox" data-k="${key}"${checked}><div><div class="ckt">${it[0]}</div><div class="ckd">${it[1]}</div></div></label>`;
+      });
+      html+=`</div>`;
+    }
+    if(day.note)html+=`<div class="checklist" style="padding-top:12px"><span style="font-size:13px;color:var(--ink3)"><b>Note:</b> ${day.note}</span></div>`;
+    if(day.move)html+=`<div style="font-size:13px;color:var(--ink3);margin-top:8px"><b>Moving it:</b> ${day.move}</div>`;
+    inner.innerHTML=html; wire();
+  }
+
+  function wire(){
+    inner.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+      cb.addEventListener('change',()=>store.set(cb.dataset.k,cb.checked?'1':'0'));
+    });
+    const prev=inner.querySelector('#tnav-prev');
+    const next=inner.querySelector('#tnav-next');
+    const tdy=inner.querySelector('#tnav-today');
+    if(prev)prev.addEventListener('click',()=>{ if(cur>PLAN_START)render(shiftISO(cur,-1)); });
+    if(next)next.addEventListener('click',()=>{ if(cur<PLAN_END)render(shiftISO(cur,1)); });
+    if(tdy)tdy.addEventListener('click',()=>render(clampISO(realToday)));
+  }
+
+  render(cur);
+
+  /* keyboard arrows, only when focus is inside the panel and not on a control */
+  if(panel)panel.addEventListener('keydown',e=>{
+    if(e.target.closest('input,textarea,select,a,button'))return;
+    if(e.key==='ArrowLeft' && cur>PLAN_START){e.preventDefault();render(shiftISO(cur,-1));}
+    else if(e.key==='ArrowRight' && cur<PLAN_END){e.preventDefault();render(shiftISO(cur,1));}
+  });
+})();
+
+/* ---- weekly grid ---- */
+const PHTAG={build:'Build',down:'Down week',spec:'Race-specific',taper:'Taper',race:'Race week'};
+const BORDER={race:'var(--race)',spec:'var(--hard)',taper:'var(--long)',down:'var(--rest)',build:'var(--mod)'};
+const weeksEl=document.getElementById('weeks');
+const iso=todayISO();
+WEEKS.forEach(wk=>{
+  const head=el('div','wkhead');
+  head.style.borderLeftColor=BORDER[wk.phase];
+  head.innerHTML=`<span class="wn">${wk.id}</span><span class="wd">${wk.dates}</span><span class="tag ${wk.phase}">${PHTAG[wk.phase]}</span><span class="wkkm">${wk.km}</span><span class="wkfocus">${wk.focus}</span>`;
+  weeksEl.appendChild(head);
+  const grid=el('div','grid');
+  wk.days.forEach((d,di)=>{
+    const cell=el('div','day'+(d.done?' done':'')+(d.date===iso?' is-today':''));
+    cell.id='day-'+d.date;cell.setAttribute('role','button');cell.setAttribute('tabindex','0');
+    const col=ACCENT[d.t]||'var(--rest)';
+    let badge='';
+    if(d.fixed)badge='<span class="badge fixed">Fixed</span>';
+    else if(d.q)badge='<span class="badge q">Quality</span>';
+    else if(d.t==='long')badge='<span class="badge key">Key</span>';
+    else if(d.anchor)badge='<span class="badge" style="color:var(--mod)">Anchor</span>';
+    cell.innerHTML=`<span class="bar" style="background:${col}"></span>${badge}
+      <div class="dw">${fmtDate(d.date)}</div><div class="dy">${d.title}</div><div class="dm">${d.meta||''}</div>`;
+    const drawer=el('div','drawer');drawer.id='drawer-'+d.date;
+    let dh=`<h4>${d.title}</h4><div class="dmeta">${fmtDate(d.date)}${d.meta?' · '+d.meta:''}${d.shoe?' · '+d.shoe:''}</div><div class="dbody">${d.body}</div>`;
+    if(d.str)dh+=strTable(d.str);
+    if(d.guide)dh+=guideLink(d.guide);
+    dh+=`<div class="rchips"><span class="rchip ${'on'}">${ROUTINE_LABEL[d.routine]}</span>`;
+    if(d.routine==='run')dh+=`<span class="rchip on">pre-run warm-up</span><span class="rchip on">post-run stretches</span><span class="rchip on">heel drops (evening)</span>`;
+    if(d.routine==='strL')dh+=`<span class="rchip off">heel drops — covered by session eccentrics</span><span class="rchip on">hip flexor</span>`;
+    if(d.routine==='strU')dh+=`<span class="rchip on">heel drops</span><span class="rchip on">hip flexor</span>`;
+    if(d.routine==='rest')dh+=`<span class="rchip on">heel drops</span><span class="rchip on">rest-day routine</span>`;
+    dh+=`</div>`;
+    if(d.note)dh+=`<div class="note"><b>Note:</b> ${d.note}</div>`;
+    if(d.move)dh+=`<div class="note"><b>Moving it:</b> ${d.move}</div>`;
+    drawer.innerHTML=dh;
+    function toggle(){
+      const open=drawer.classList.contains('open');
+      grid.querySelectorAll('.drawer.open').forEach(x=>x.classList.remove('open'));
+      if(!open)drawer.classList.add('open');
+    }
+    cell.addEventListener('click',toggle);
+    cell.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+    grid.appendChild(cell);
+    grid.appendChild(drawer);
+  });
+  weeksEl.appendChild(grid);
+});
+
+/* deep-link: open a day's drawer from #day-YYYY-MM-DD */
+(function(){
+function openFromHash(){var m=(location.hash||'').match(/^#day-(\d{4}-\d{2}-\d{2})$/);if(!m)return;var dr=document.getElementById('drawer-'+m[1]),c=document.getElementById('day-'+m[1]);if(dr){document.querySelectorAll('.drawer.open').forEach(function(x){x.classList.remove('open')});dr.classList.add('open');if(c)c.scrollIntoView({behavior:'smooth',block:'center'});}}
+window.addEventListener('hashchange',openFromHash);setTimeout(openFromHash,60);
+})();
+
+/* ---- theme toggle (follows system until the user pins a choice) ---- */
+(function(){
+  const KEY='c2s-theme';
+  const root=document.documentElement;
+  const btn=document.getElementById('theme-toggle');
+  const meta=document.querySelector('meta[name="theme-color"]');
+  const META={dark:'#13161b',light:'#f4f6f9'};
+  const mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: light)'):null;
+  const cur=()=>root.getAttribute('data-theme')==='light'?'light':'dark';
+  function sync(){
+    const t=cur();
+    if(meta)meta.setAttribute('content',META[t]);
+    if(btn){
+      btn.querySelector('.ic').textContent = t==='light'?'\u2600':'\u263e';
+      btn.querySelector('.lbl').textContent = t==='light'?'Light':'Dark';
+      btn.setAttribute('aria-label', t==='light'?'Switch to dark theme':'Switch to light theme');
+    }
+  }
+  sync();
+  if(btn)btn.addEventListener('click',()=>{
+    root.setAttribute('data-theme', cur()==='light'?'dark':'light');
+    store.set(KEY, cur());
+    sync();
+  });
+  if(mq){
+    const onSys=e=>{ if(!store.get(KEY)){ root.setAttribute('data-theme', e.matches?'light':'dark'); sync(); } };
+    mq.addEventListener ? mq.addEventListener('change',onSys) : mq.addListener(onSys);
+  }
+})();
+
+/* ---- expand / collapse all (top-level sections only) ---- */
+(function(){
+  const btn=document.getElementById('toggle-all');
+  if(!btn)return;
+  const secs=()=>document.querySelectorAll('details.sec');
+  const anyOpen=()=>[...secs()].some(d=>d.hasAttribute('open'));
+  function label(){
+    const collapsed=!anyOpen();
+    btn.textContent=collapsed?'Expand all sections':'Collapse all sections';
+    btn.setAttribute('aria-pressed',collapsed?'true':'false');
+  }
+  label();
+  btn.addEventListener('click',()=>{
+    const expand=!anyOpen();
+    secs().forEach(d=>{expand?d.setAttribute('open',''):d.removeAttribute('open')});
+    label();
+  });
+  /* keep the button honest if a single section is opened/closed by hand */
+  secs().forEach(d=>d.addEventListener('toggle',label));
+})();
+</script>
+</body>
+</html>
