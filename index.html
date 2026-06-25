@@ -529,11 +529,6 @@
   <p class="lead">Practice schedule pinned to actual long runs so nothing is new on race day.</p>
   <div class="tscroll"><table class="ref"><thead><tr><th>Long run</th><th>Practice</th></tr></thead><tbody><tr><td>Sun 14 Jun · 12 km</td><td>Water only — 2–3 sips (~100–150 ml) at ~35–40 min, sipping at pace without stopping</td></tr><tr><td>Sun 21 Jun · 13 km</td><td>Water only — same drill; it should feel less awkward already</td></tr><tr><td>Sun 28 Jun · 15 km</td><td><b>First gel</b> at 45–50 min, chased with 2–3 sips of water. Note how the stomach handles it.</td></tr><tr><td>Sun 5 Jul · 10 km (down week)</td><td>Water only — short run, no gel needed</td></tr><tr><td>Sun 12 Jul · 16 km</td><td><b>Full race rehearsal:</b> race-morning breakfast 2–3 h prior + gel at 45–50 min + water</td></tr><tr><td>Sun 19 Jul · 15 km race-pace</td><td>Gel at 45–50 min — practising fuelling at intensity</td></tr><tr><td>Sun 26 Jul · 14 km rehearsal</td><td><b>Full dress rehearsal:</b> wake-up time, breakfast, gear, fuel, warm-up — mirror race day exactly</td></tr><tr><td>Sun 2 Aug · 11 km</td><td>Water only — easy taper run</td></tr></tbody></table></div>
   <div class="recipe"><div class="rl">DIY gel — ~25 g carbs, ~5¢ each</div><div class="rr"><span class="ra">25 g</span><span>Table sugar (~1.5 heaped tbsp)</span></div><div class="rr"><span class="ra">25–30 ml</span><span>Warm water — dissolve the sugar fully first</span></div><div class="rr"><span class="ra">⅛ tsp</span><span>Table salt</span></div><div class="rr"><span class="ra">Optional</span><span>A few drops of lemon juice or diluted cordial</span></div></div>
-    <div class="rr"><span class="ra">25 g</span><span>Table sugar (~1.5 heaped tbsp)</span></div>
-    <div class="rr"><span class="ra">25–30 ml</span><span>Warm water — dissolve the sugar fully first</span></div>
-    <div class="rr"><span class="ra">⅛ tsp</span><span>Table salt</span></div>
-    <div class="rr"><span class="ra">Optional</span><span>A few drops of lemon juice or diluted cordial</span></div>
-  </div>
   <p class="lead">Mix, cool, transfer to a small silicone squeeze bottle or ziplock (bite a corner). <b>Upgrade:</b> 20 g maltodextrin + 5 g sugar + pinch of salt (Bulk Nutrients ~$8–10/kg) — lower osmolality, gentler on the gut. Sucrose's 1:1 glucose:fructose only matters above ~60 g/hr; at 25 g once, either works.</p>
   <div class="callout info"><span class="ico">ⓘ</span><span><b>Carry gear:</b> Salomon Soft Flask 150 ml (~$20, Rebel Sport / Running Science CBD) — collapses flat, fits a shorts pocket. Interim: a 350 ml convenience-store bottle, drink half before starting. No vest needed under 90 min.</span></div>
 </div>
@@ -781,7 +776,7 @@ WEEKS.forEach(wk=>{
 
 /* deep-link: open a day's drawer from #day-YYYY-MM-DD */
 (function(){
-function openFromHash(){var m=(location.hash||'').match(/^#day-(\d{4}-\d{2}-\d{2})$/);if(!m)return;var dr=document.getElementById('drawer-'+m[1]),c=document.getElementById('day-'+m[1]);if(dr){document.querySelectorAll('.drawer.open').forEach(function(x){x.classList.remove('open')});dr.classList.add('open');if(c)c.scrollIntoView({behavior:'smooth',block:'center'});}
+function openFromHash(){var m=(location.hash||'').match(/^#day-(\d{4}-\d{2}-\d{2})$/);if(!m)return;var dr=document.getElementById('drawer-'+m[1]),c=document.getElementById('day-'+m[1]);if(dr){document.querySelectorAll('.drawer.open').forEach(function(x){x.classList.remove('open')});dr.classList.add('open');if(c)c.scrollIntoView({behavior:'smooth',block:'center'});}}
 window.addEventListener('hashchange',openFromHash);setTimeout(openFromHash,60);
 })();
 
