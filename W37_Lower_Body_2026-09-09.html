@@ -167,6 +167,55 @@
   footer{color:var(--ink3);font-size:11px;text-align:center;font-family:"DM Mono";letter-spacing:.04em;margin-top:18px}
   .card,.sess-header,.set,.tbtn{transition:background-color .3s ease,border-color .3s ease,color .3s ease}
 
+
+  /* ---- in-session log ---- */
+  .log{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+  .log-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:9px}
+  .log-l{font-family:"DM Mono";font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink3);min-width:32px}
+  .log-in{font-family:"DM Mono";font-size:14px;min-height:40px;padding:0 11px;border-radius:10px;
+    border:1px solid var(--line);background:var(--panel2);color:var(--ink);width:106px;
+    -webkit-appearance:none;appearance:none}
+  .log-in.load{width:116px}
+  .log-in::placeholder,.log-note::placeholder{color:var(--ink3)}
+  .log-in:focus,.log-note:focus{outline:none;border-color:var(--str-line);background:var(--panel)}
+  .rir{font-family:"DM Mono";font-size:13px;min-height:38px;padding:0 12px;border-radius:10px;
+    border:1px solid var(--line);background:var(--panel2);color:var(--ink2);cursor:pointer;
+    -webkit-tap-highlight-color:transparent}
+  .rir.on{background:var(--str-soft);border-color:var(--str-line);color:var(--str)}
+  .log-note{font-family:inherit;font-size:14px;line-height:1.5;width:100%;min-height:56px;
+    padding:10px 11px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);
+    color:var(--ink);resize:vertical;-webkit-appearance:none;appearance:none}
+  /* ---- performed order list ---- */
+  .orderbox,.sessbox{margin-top:20px}
+  .orderbox .log-l,.sessbox .log-l{display:block;margin-bottom:8px}
+  .orderlist{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ord{display:flex;align-items:center;gap:9px;padding:0 8px 0 2px;min-height:46px;
+    background:var(--panel2);border-bottom:1px solid var(--line);touch-action:pan-y}
+  .ord:last-child{border-bottom:none}
+  .ord.drag{background:var(--str-soft)}
+  .ord.moved .ord-n{color:var(--str)}
+  .ord-h{font-size:16px;line-height:1;color:var(--ink3);cursor:grab;padding:13px 8px;
+    touch-action:none;-webkit-tap-highlight-color:transparent;user-select:none}
+  .ord-n{font-family:"DM Mono";font-size:12px;color:var(--ink3);min-width:14px;text-align:right}
+  .ord-name{flex:1;font-size:13.5px;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ord-b{font-family:"DM Mono";font-size:14px;min-width:36px;min-height:36px;border-radius:9px;
+    border:1px solid var(--line);background:var(--panel);color:var(--ink2);cursor:pointer;
+    -webkit-tap-highlight-color:transparent}
+  .ord-b[disabled]{opacity:.28;cursor:default}
+  .ordbar,.logbar{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;align-items:center;margin-top:12px}
+  .ordbar button,.logbar button{font-family:"DM Mono";font-size:11px;letter-spacing:.08em;color:var(--ink3);
+    background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 16px;
+    min-height:38px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .logbar button.primary{color:var(--str);border-color:var(--str-line);background:var(--str-soft)}
+  .logbar .hint{font-family:"DM Mono";font-size:10px;letter-spacing:.06em;color:var(--ink3);
+    width:100%;text-align:center}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:104px;z-index:60;
+    background:var(--panel2);border:1px solid var(--str-line);color:var(--str);font-family:"DM Mono";
+    font-size:12px;padding:10px 18px;border-radius:999px;opacity:0;transition:opacity .18s;
+    pointer-events:none;max-width:80vw;text-align:center}
+  .toast.on{opacity:1}
+
   /* ---- rest timer bar (fixed, bottom) ---- */
   .restbar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--panel);
     border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.28);
@@ -216,7 +265,7 @@
     </div>
   </div>
   <div class="callout orange" style="margin-bottom:4px">Lower body.<br><br><b>The hinge returns to dumbbells.</b> The cable RDL is retired — at 25 kg total it was delivering roughly 40% of the hip-extension moment of a 10 kg/hand dumbbell RDL, with the balance going into bracing against the horizontal pull. The dumbbell version was abandoned in August at 3×8, halfway up its own ladder, on an inventory claim that turned out to be wrong. Picking it up where it was left.<br><br><b>Single-leg press holds at 23 kg and reps are deliberately capped.</b> This is a setup session, not a rep-chasing one: foot lower on the platform, depth to ~90° and no further, hips square. Right knee tracking on every set.</div>
-  <div class="callout purple"><b>Target 2-3 RIR</b> on load-progressed lifts &mdash; run club ~24 h later. Split squats are governed by knee tracking, not RIR; planks and dead bugs are prescribed sets.</div>
+  <div class="callout purple"><b>Target 2-3 RIR</b> on load-progressed lifts &mdash; run club ~24 h later. On split squats RIR is logged with knee tracking held &mdash; stop on tracking, not on reps left. Planks and dead bugs are prescribed sets.</div>
   <div class="section-label">Warm-Up &mdash; ~10 min</div>
   <div class="card wu">
     <p style="font-size:14px;color:var(--ink2);margin-bottom:13px">Work through in order. Single-leg work later asks for balance and right-side control — prime the ankle, hip and glute well.</p>
@@ -237,9 +286,14 @@
       <li>Back flush; knees ~90° at start; whole foot on the platform; latches engaged.</li>
     </ul>
     <div class="setbar"><span class="sl">Tap when done</span>
-      <button class="set" data-k="c2s-w37l-legpress-1" data-rest="90" data-label="Leg Press">Set 1</button>
-      <button class="set" data-k="c2s-w37l-legpress-2" data-rest="90" data-label="Leg Press">Set 2</button>
-      <button class="set" data-k="c2s-w37l-legpress-3" data-rest="90" data-label="Leg Press">Set 3</button>
+      <button class="set" data-k="c2s-w37l-legpress-1" data-tk="c2s-2026-09-09-leg_press-t" data-rest="90" data-label="Leg Press">Set 1</button>
+      <button class="set" data-k="c2s-w37l-legpress-2" data-tk="c2s-2026-09-09-leg_press-t" data-rest="90" data-label="Leg Press">Set 2</button>
+      <button class="set" data-k="c2s-w37l-legpress-3" data-tk="c2s-2026-09-09-leg_press-t" data-rest="90" data-label="Leg Press">Set 3</button>
+    </div>
+    <div class="log" data-k="c2s-2026-09-09-leg_press" data-ex="leg_press" data-name="Leg Press" data-plan="3 × 10 @ 58 kg">
+      <div class="log-row"><span class="log-l">Reps</span><input class="log-in reps" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-leg_press-reps" placeholder="10-10-10" aria-label="Reps logged for Leg Press"><span class="log-l">Load</span><input class="log-in load" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-leg_press-load" placeholder="as planned" aria-label="Load logged for Leg Press"></div>
+      <div class="log-row"><span class="log-l">RIR</span><button type="button" class="rir" data-v="0" aria-pressed="false" aria-label="0 reps in reserve">0</button><button type="button" class="rir" data-v="0-1" aria-pressed="false" aria-label="0-1 reps in reserve">0-1</button><button type="button" class="rir" data-v="1" aria-pressed="false" aria-label="1 reps in reserve">1</button><button type="button" class="rir" data-v="1-2" aria-pressed="false" aria-label="1-2 reps in reserve">1-2</button><button type="button" class="rir" data-v="2" aria-pressed="false" aria-label="2 reps in reserve">2</button><button type="button" class="rir" data-v="2-3" aria-pressed="false" aria-label="2-3 reps in reserve">2-3</button><button type="button" class="rir" data-v="4+" aria-pressed="false" aria-label="4+ reps in reserve">4+</button></div>
+      <textarea class="log-note" data-k="c2s-2026-09-09-leg_press-note" rows="2" placeholder="Notes" aria-label="Notes for Leg Press"></textarea>
     </div>
     <div class="sub-h">Key cues</div>
     <ul class="cues">
@@ -257,9 +311,14 @@
       <li>Foot centred on the platform; back flush; don't twist; latches engaged.</li>
     </ul>
     <div class="setbar"><span class="sl">Tap when done</span>
-      <button class="set" data-k="c2s-w37l-singlele-1" data-rest="90" data-label="Single-Leg Leg Press">Set 1</button>
-      <button class="set" data-k="c2s-w37l-singlele-2" data-rest="90" data-label="Single-Leg Leg Press">Set 2</button>
-      <button class="set" data-k="c2s-w37l-singlele-3" data-rest="90" data-label="Single-Leg Leg Press">Set 3</button>
+      <button class="set" data-k="c2s-w37l-singlele-1" data-tk="c2s-2026-09-09-single_leg_leg_press-t" data-rest="90" data-label="Single-Leg Leg Press">Set 1</button>
+      <button class="set" data-k="c2s-w37l-singlele-2" data-tk="c2s-2026-09-09-single_leg_leg_press-t" data-rest="90" data-label="Single-Leg Leg Press">Set 2</button>
+      <button class="set" data-k="c2s-w37l-singlele-3" data-tk="c2s-2026-09-09-single_leg_leg_press-t" data-rest="90" data-label="Single-Leg Leg Press">Set 3</button>
+    </div>
+    <div class="log" data-k="c2s-2026-09-09-single_leg_leg_press" data-ex="single_leg_leg_press" data-name="Single-Leg Leg Press" data-plan="3 × 12/leg @ 23 kg/leg">
+      <div class="log-row"><span class="log-l">Reps</span><input class="log-in reps" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-single_leg_leg_press-reps" placeholder="12-12-12" aria-label="Reps logged for Single-Leg Leg Press"><span class="log-l">Load</span><input class="log-in load" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-single_leg_leg_press-load" placeholder="as planned" aria-label="Load logged for Single-Leg Leg Press"></div>
+      <div class="log-row"><span class="log-l">RIR</span><button type="button" class="rir" data-v="0" aria-pressed="false" aria-label="0 reps in reserve">0</button><button type="button" class="rir" data-v="0-1" aria-pressed="false" aria-label="0-1 reps in reserve">0-1</button><button type="button" class="rir" data-v="1" aria-pressed="false" aria-label="1 reps in reserve">1</button><button type="button" class="rir" data-v="1-2" aria-pressed="false" aria-label="1-2 reps in reserve">1-2</button><button type="button" class="rir" data-v="2" aria-pressed="false" aria-label="2 reps in reserve">2</button><button type="button" class="rir" data-v="2-3" aria-pressed="false" aria-label="2-3 reps in reserve">2-3</button><button type="button" class="rir" data-v="4+" aria-pressed="false" aria-label="4+ reps in reserve">4+</button></div>
+      <textarea class="log-note" data-k="c2s-2026-09-09-single_leg_leg_press-note" rows="2" placeholder="Notes" aria-label="Notes for Single-Leg Leg Press"></textarea>
     </div>
     <div class="sub-h">Key cues</div>
     <ul class="cues">
@@ -280,9 +339,14 @@
       <div class="setup-step">Soft, unlocked knees — they barely move.</div>
     </div>
     <div class="setbar"><span class="sl">Tap when done</span>
-      <button class="set" data-k="c2s-w37l-dbrdl-1" data-rest="90" data-label="Romanian Deadlift">Set 1</button>
-      <button class="set" data-k="c2s-w37l-dbrdl-2" data-rest="90" data-label="Romanian Deadlift">Set 2</button>
-      <button class="set" data-k="c2s-w37l-dbrdl-3" data-rest="90" data-label="Romanian Deadlift">Set 3</button>
+      <button class="set" data-k="c2s-w37l-dbrdl-1" data-tk="c2s-2026-09-09-db_rdl-t" data-rest="90" data-label="Romanian Deadlift">Set 1</button>
+      <button class="set" data-k="c2s-w37l-dbrdl-2" data-tk="c2s-2026-09-09-db_rdl-t" data-rest="90" data-label="Romanian Deadlift">Set 2</button>
+      <button class="set" data-k="c2s-w37l-dbrdl-3" data-tk="c2s-2026-09-09-db_rdl-t" data-rest="90" data-label="Romanian Deadlift">Set 3</button>
+    </div>
+    <div class="log" data-k="c2s-2026-09-09-db_rdl" data-ex="db_rdl" data-name="Romanian Deadlift" data-plan="3 × 8 @ 10 kg/hand">
+      <div class="log-row"><span class="log-l">Reps</span><input class="log-in reps" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-db_rdl-reps" placeholder="8-8-8" aria-label="Reps logged for Romanian Deadlift"><span class="log-l">Load</span><input class="log-in load" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-db_rdl-load" placeholder="as planned" aria-label="Load logged for Romanian Deadlift"></div>
+      <div class="log-row"><span class="log-l">RIR</span><button type="button" class="rir" data-v="0" aria-pressed="false" aria-label="0 reps in reserve">0</button><button type="button" class="rir" data-v="0-1" aria-pressed="false" aria-label="0-1 reps in reserve">0-1</button><button type="button" class="rir" data-v="1" aria-pressed="false" aria-label="1 reps in reserve">1</button><button type="button" class="rir" data-v="1-2" aria-pressed="false" aria-label="1-2 reps in reserve">1-2</button><button type="button" class="rir" data-v="2" aria-pressed="false" aria-label="2 reps in reserve">2</button><button type="button" class="rir" data-v="2-3" aria-pressed="false" aria-label="2-3 reps in reserve">2-3</button><button type="button" class="rir" data-v="4+" aria-pressed="false" aria-label="4+ reps in reserve">4+</button></div>
+      <textarea class="log-note" data-k="c2s-2026-09-09-db_rdl-note" rows="2" placeholder="Notes" aria-label="Notes for Romanian Deadlift"></textarea>
     </div>
     <div class="sub-h">Instructions</div>
     <ol class="steps">
@@ -306,9 +370,14 @@
       <li>Face down, hips flat; knee on the pivot; ankle pad set high enough that it finishes above the heel, not on the Achilles.</li>
     </ul>
     <div class="setbar"><span class="sl">Tap when done</span>
-      <button class="set" data-k="c2s-w37l-legcurl-1" data-rest="90" data-label="Lying Leg Curl">Set 1</button>
-      <button class="set" data-k="c2s-w37l-legcurl-2" data-rest="90" data-label="Lying Leg Curl">Set 2</button>
-      <button class="set" data-k="c2s-w37l-legcurl-3" data-rest="90" data-label="Lying Leg Curl">Set 3</button>
+      <button class="set" data-k="c2s-w37l-legcurl-1" data-tk="c2s-2026-09-09-leg_curl-t" data-rest="90" data-label="Lying Leg Curl">Set 1</button>
+      <button class="set" data-k="c2s-w37l-legcurl-2" data-tk="c2s-2026-09-09-leg_curl-t" data-rest="90" data-label="Lying Leg Curl">Set 2</button>
+      <button class="set" data-k="c2s-w37l-legcurl-3" data-tk="c2s-2026-09-09-leg_curl-t" data-rest="90" data-label="Lying Leg Curl">Set 3</button>
+    </div>
+    <div class="log" data-k="c2s-2026-09-09-leg_curl" data-ex="leg_curl" data-name="Lying Leg Curl" data-plan="3 × 12 @ 14 kg">
+      <div class="log-row"><span class="log-l">Reps</span><input class="log-in reps" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-leg_curl-reps" placeholder="12-12-12" aria-label="Reps logged for Lying Leg Curl"><span class="log-l">Load</span><input class="log-in load" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-leg_curl-load" placeholder="as planned" aria-label="Load logged for Lying Leg Curl"></div>
+      <div class="log-row"><span class="log-l">RIR</span><button type="button" class="rir" data-v="0" aria-pressed="false" aria-label="0 reps in reserve">0</button><button type="button" class="rir" data-v="0-1" aria-pressed="false" aria-label="0-1 reps in reserve">0-1</button><button type="button" class="rir" data-v="1" aria-pressed="false" aria-label="1 reps in reserve">1</button><button type="button" class="rir" data-v="1-2" aria-pressed="false" aria-label="1-2 reps in reserve">1-2</button><button type="button" class="rir" data-v="2" aria-pressed="false" aria-label="2 reps in reserve">2</button><button type="button" class="rir" data-v="2-3" aria-pressed="false" aria-label="2-3 reps in reserve">2-3</button><button type="button" class="rir" data-v="4+" aria-pressed="false" aria-label="4+ reps in reserve">4+</button></div>
+      <textarea class="log-note" data-k="c2s-2026-09-09-leg_curl-note" rows="2" placeholder="Notes" aria-label="Notes for Lying Leg Curl"></textarea>
     </div>
     <div class="sub-h">Key cues</div>
     <ul class="cues">
@@ -328,9 +397,13 @@
       <li>Forearm down, top foot/ankle on a bench; knee version if the hold gets sloppy.</li>
     </ul>
     <div class="setbar"><span class="sl">Tap when done</span>
-      <button class="set" data-k="c2s-w37l-copenhag-1" data-rest="90" data-label="Copenhagen Plank">Set 1</button>
-      <button class="set" data-k="c2s-w37l-copenhag-2" data-rest="90" data-label="Copenhagen Plank">Set 2</button>
-      <button class="set" data-k="c2s-w37l-copenhag-3" data-rest="90" data-label="Copenhagen Plank">Set 3</button>
+      <button class="set" data-k="c2s-w37l-copenhag-1" data-tk="c2s-2026-09-09-copenhagen_plank-t" data-rest="90" data-label="Copenhagen Plank">Set 1</button>
+      <button class="set" data-k="c2s-w37l-copenhag-2" data-tk="c2s-2026-09-09-copenhagen_plank-t" data-rest="90" data-label="Copenhagen Plank">Set 2</button>
+      <button class="set" data-k="c2s-w37l-copenhag-3" data-tk="c2s-2026-09-09-copenhagen_plank-t" data-rest="90" data-label="Copenhagen Plank">Set 3</button>
+    </div>
+    <div class="log" data-k="c2s-2026-09-09-copenhagen_plank" data-ex="copenhagen_plank" data-name="Copenhagen Plank" data-plan="3 × 30 s/side BW">
+      <div class="log-row"><span class="log-l">Reps</span><input class="log-in reps" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-copenhagen_plank-reps" placeholder="30-30-30" aria-label="Reps logged for Copenhagen Plank"><span class="log-l">Load</span><input class="log-in load" type="text" autocomplete="off" autocapitalize="off" data-k="c2s-2026-09-09-copenhagen_plank-load" placeholder="as planned" aria-label="Load logged for Copenhagen Plank"></div>
+      <textarea class="log-note" data-k="c2s-2026-09-09-copenhagen_plank-note" rows="2" placeholder="Notes" aria-label="Notes for Copenhagen Plank"></textarea>
     </div>
     <div class="sub-h">Key cues</div>
     <ul class="cues">
@@ -350,18 +423,29 @@
     <div class="step-row"><span class="step-n">05</span><div class="step-body"><b>Figure-4 / pigeon</b> &mdash; 60 s per side. Opens the hip rotators.</div></div>
     <div class="step-row"><span class="step-n">06</span><div class="step-body"><b>Child's pose</b> &mdash; 60 s. Finish here.</div></div>
   </div>
-  <div class="resetbar"><button type="button" id="reset-sets">Reset set ticks</button></div>
+  <div class="orderbox"><span class="log-l">Performed order</span>
+    <ol class="orderlist" id="orderlist" data-k="c2s-2026-09-09-order">
+      <li class="ord" data-ex="leg_press" data-name="Leg Press" data-tk="c2s-2026-09-09-leg_press-t"><span class="ord-h" aria-hidden="true">&#9776;</span><span class="ord-n">0</span><span class="ord-name">Leg Press</span><button type="button" class="ord-b ord-up" aria-label="Move Leg Press earlier">&#8593;</button><button type="button" class="ord-b ord-dn" aria-label="Move Leg Press later">&#8595;</button></li>
+      <li class="ord" data-ex="single_leg_leg_press" data-name="Single-Leg Leg Press" data-tk="c2s-2026-09-09-single_leg_leg_press-t"><span class="ord-h" aria-hidden="true">&#9776;</span><span class="ord-n">0</span><span class="ord-name">Single-Leg Leg Press</span><button type="button" class="ord-b ord-up" aria-label="Move Single-Leg Leg Press earlier">&#8593;</button><button type="button" class="ord-b ord-dn" aria-label="Move Single-Leg Leg Press later">&#8595;</button></li>
+      <li class="ord" data-ex="db_rdl" data-name="Romanian Deadlift" data-tk="c2s-2026-09-09-db_rdl-t"><span class="ord-h" aria-hidden="true">&#9776;</span><span class="ord-n">0</span><span class="ord-name">Romanian Deadlift</span><button type="button" class="ord-b ord-up" aria-label="Move Romanian Deadlift earlier">&#8593;</button><button type="button" class="ord-b ord-dn" aria-label="Move Romanian Deadlift later">&#8595;</button></li>
+      <li class="ord" data-ex="leg_curl" data-name="Lying Leg Curl" data-tk="c2s-2026-09-09-leg_curl-t"><span class="ord-h" aria-hidden="true">&#9776;</span><span class="ord-n">0</span><span class="ord-name">Lying Leg Curl</span><button type="button" class="ord-b ord-up" aria-label="Move Lying Leg Curl earlier">&#8593;</button><button type="button" class="ord-b ord-dn" aria-label="Move Lying Leg Curl later">&#8595;</button></li>
+      <li class="ord" data-ex="copenhagen_plank" data-name="Copenhagen Plank" data-tk="c2s-2026-09-09-copenhagen_plank-t"><span class="ord-h" aria-hidden="true">&#9776;</span><span class="ord-n">0</span><span class="ord-name">Copenhagen Plank</span><button type="button" class="ord-b ord-up" aria-label="Move Copenhagen Plank earlier">&#8593;</button><button type="button" class="ord-b ord-dn" aria-label="Move Copenhagen Plank later">&#8595;</button></li>
+    </ol>
+    <div class="ordbar"><button type="button" id="ord-taps">Use tap order</button><button type="button" id="ord-reset">Reset to prescribed</button></div>
+  </div>
+  <div class="sessbox"><span class="log-l">Session notes</span><textarea class="log-note" id="sess-note" data-k="c2s-2026-09-09-session" rows="2" placeholder="Anything spanning exercises — order effects, energy, niggles" aria-label="Session notes"></textarea></div>
+  <div class="logbar" data-session="W37 Lower Body — Wed 9 Sep"><button type="button" id="log-copy" class="primary">Copy session log</button><button type="button" id="log-reset">Clear log</button><button type="button" id="reset-sets">Reset set ticks</button><span class="hint">Saved on this device as you type</span></div>
   <footer>Strength Block — Training Companion &middot; Wed 9 Sep</footer>
 
 </div>
 
 <div class="restbar" id="restbar" aria-live="polite">
   <div class="rb-state" id="rb-idle">
-    <span class="rb-idle-label"><span aria-hidden="true">&#9201;</span> Rest timer</span>
+    <span class="rb-idle-label"><span aria-hidden="true">&#9201;</span> Timer</span>
     <div class="rb-ctrls">
+      <button type="button" class="rb-btn preset" data-sec="30">30s</button>
+      <button type="button" class="rb-btn preset" data-sec="45">45s</button>
       <button type="button" class="rb-btn preset" data-sec="60">60s</button>
-      <button type="button" class="rb-btn preset" data-sec="90">90s</button>
-      <button type="button" class="rb-btn preset" data-sec="120">120s</button>
     </div>
   </div>
   <div class="rb-state" id="rb-run" hidden>
@@ -462,7 +546,7 @@ const RestTimer=(function(){
   pauseBtn.addEventListener('click',togglePause);
   document.getElementById('rb-reset').addEventListener('click',reset);
   document.getElementById('rb-close').addEventListener('click',toIdle);
-  idle.querySelectorAll('.preset').forEach(b=>b.addEventListener('click',()=>start(+b.dataset.sec,'Rest')));
+  idle.querySelectorAll('.preset').forEach(b=>b.addEventListener('click',()=>start(+b.dataset.sec,'Timer')));
 
   /* keep correct after the screen sleeps / tab backgrounds */
   document.addEventListener('visibilitychange',()=>{if(!document.hidden&&running&&!paused)render();});
@@ -481,6 +565,7 @@ const RestTimer=(function(){
       b.setAttribute('aria-pressed',done);
       store.set(b.dataset.k,done?'1':'0');
       if(done){
+        if(b.dataset.tk&&!store.get(b.dataset.tk))store.set(b.dataset.tk,String(Date.now()));
         const sec=parseInt(b.dataset.rest||'0',10);
         if(sec>0)RestTimer.start(sec,'Rest · '+(b.dataset.label||''));
       }
@@ -491,6 +576,187 @@ const RestTimer=(function(){
     sets.forEach(b=>{b.classList.remove('done');b.setAttribute('aria-pressed','false');store.set(b.dataset.k,'0');});
   });
 })();
+/* ---- performed order (compact list; exercise cards never move) ---- */
+(function(){
+  const list=document.getElementById('orderlist');
+  if(!list)return;
+  const KEY=list.dataset.k;
+  const items=()=>Array.prototype.slice.call(list.querySelectorAll('.ord'));
+  const prescribed=items().map(x=>x.dataset.ex);
+  const names={};items().forEach(x=>{names[x.dataset.ex]=x.dataset.name;});
+
+  function paint(){
+    const cur=items();
+    cur.forEach((li,i)=>{
+      li.querySelector('.ord-n').textContent=i+1;
+      li.classList.toggle('moved',li.dataset.ex!==prescribed[i]);
+      li.querySelector('.ord-up').disabled=(i===0);
+      li.querySelector('.ord-dn').disabled=(i===cur.length-1);
+    });
+    store.set(KEY,cur.map(x=>x.dataset.ex).join(','));
+  }
+  function applyOrder(ids){
+    const by={};items().forEach(x=>{by[x.dataset.ex]=x;});
+    ids.forEach(id=>{if(by[id])list.appendChild(by[id]);});
+    items().forEach(x=>{if(ids.indexOf(x.dataset.ex)<0)list.appendChild(x);});
+    paint();
+  }
+  const saved=store.get(KEY);
+  if(saved)applyOrder(saved.split(','));else paint();
+
+  list.addEventListener('click',e=>{
+    const b=e.target.closest?e.target.closest('.ord-b'):null;
+    if(!b||b.disabled)return;
+    const li=b.closest('.ord');
+    if(b.classList.contains('ord-up')&&li.previousElementSibling)list.insertBefore(li,li.previousElementSibling);
+    else if(b.classList.contains('ord-dn')&&li.nextElementSibling)list.insertBefore(li.nextElementSibling,li);
+    paint();
+  });
+
+  let drag=null;
+  list.addEventListener('pointerdown',e=>{
+    const h=e.target.closest?e.target.closest('.ord-h'):null;
+    if(!h)return;
+    drag=h.closest('.ord');drag.classList.add('drag');
+    try{h.setPointerCapture(e.pointerId);}catch(err){}
+    e.preventDefault();
+  });
+  list.addEventListener('pointermove',e=>{
+    if(!drag)return;
+    e.preventDefault();
+    const y=e.clientY,cur=items(),from=cur.indexOf(drag);
+    for(let i=0;i<cur.length;i++){
+      const li=cur[i];
+      if(li===drag)continue;
+      const r=li.getBoundingClientRect();
+      if(y>r.top&&y<r.bottom){list.insertBefore(drag,(from<i)?li.nextElementSibling:li);break;}
+    }
+  });
+  function endDrag(){if(!drag)return;drag.classList.remove('drag');drag=null;paint();}
+  list.addEventListener('pointerup',endDrag);
+  list.addEventListener('pointercancel',endDrag);
+
+  const taps=document.getElementById('ord-taps');
+  if(taps)taps.addEventListener('click',()=>{
+    const st=items().map(x=>({id:x.dataset.ex,t:parseInt(store.get(x.dataset.tk)||'0',10)}));
+    if(!st.some(s=>s.t>0)){window.alert('No set taps recorded yet \u2014 tap sets as you go, or reorder the list by hand.');return;}
+    st.sort((a,b)=>(a.t||Infinity)-(b.t||Infinity));
+    applyOrder(st.map(s=>s.id));
+  });
+  const rst=document.getElementById('ord-reset');
+  if(rst)rst.addEventListener('click',()=>applyOrder(prescribed.slice()));
+
+  window.__order=()=>({order:items().map(x=>x.dataset.ex),prescribed:prescribed.slice(),names:names});
+  window.__resetOrder=()=>applyOrder(prescribed.slice());
+})();
+
+/* ---- in-session log: persist fields + export as plain text ---- */
+(function(){
+  const bar=document.querySelector('.logbar');
+  if(!bar)return;
+  const fields=Array.prototype.slice.call(document.querySelectorAll('.log-in,.log-note'));
+  fields.forEach(f=>{
+    const v=store.get(f.dataset.k);
+    if(v)f.value=v;
+    f.addEventListener('input',()=>store.set(f.dataset.k,f.value));
+  });
+  const groups=Array.prototype.slice.call(document.querySelectorAll('.log'));
+  groups.forEach(g=>{
+    const key=g.dataset.k+'-rir',saved=store.get(key)||'';
+    g.querySelectorAll('.rir').forEach(b=>{
+      if(b.dataset.v===saved)b.classList.add('on');
+      b.setAttribute('aria-pressed',b.classList.contains('on'));
+      b.addEventListener('click',()=>{
+        const was=b.classList.contains('on');
+        g.querySelectorAll('.rir').forEach(x=>{x.classList.remove('on');x.setAttribute('aria-pressed','false');});
+        if(was){store.set(key,'');}
+        else{b.classList.add('on');b.setAttribute('aria-pressed','true');store.set(key,b.dataset.v);}
+      });
+    });
+  });
+
+  function line(g){
+    const rEl=g.querySelector('.log-in.reps'),lEl=g.querySelector('.log-in.load');
+    const nEl=g.querySelector('.log-note'),sEl=g.querySelector('.rir.on');
+    const reps=rEl?rEl.value.trim():'',load=lEl?lEl.value.trim():'';
+    const rir=sEl?sEl.dataset.v:'',note=nEl?nEl.value.trim():'';
+    if(!reps&&!load&&!rir&&!note)return null;
+    const d=[];
+    if(reps)d.push(load?reps+' @ '+load:reps);
+    else if(load)d.push('@ '+load);
+    if(rir)d.push(rir+' RIR');
+    let s=g.dataset.name+' ('+g.dataset.plan+')';
+    if(d.length)s+=' \u2014 '+d.join(', ');
+    if(note)s+=(d.length?'. ':' \u2014 ')+note;
+    return s;
+  }
+  function build(){
+    const po=(typeof window.__order==='function')?window.__order():null;
+    const head=[bar.dataset.session,
+      'In-session log. Each line: Exercise (planned) \u2014 executed. Right of the dash is authoritative. Load as planned unless stated.'];
+    let seq=groups;
+    if(po){
+      const by={};groups.forEach(g=>{by[g.dataset.ex]=g;});
+      seq=po.order.map(id=>by[id]).filter(Boolean);
+      groups.forEach(g=>{if(seq.indexOf(g)<0)seq.push(g);});
+    }
+    const body=[],done=[];
+    let n=0;
+    seq.forEach(g=>{const s=line(g);if(s){body.push(s);done.push(g.dataset.ex);n++;}});
+    if(po&&done.length>1){
+      /* only compare exercises that actually produced a line */
+      const was=po.prescribed.filter(id=>done.indexOf(id)>=0);
+      if(was.join(',')!==done.join(','))
+        head.push('Performed order differs from prescribed. Prescribed was: '
+          +was.map(id=>po.names[id]).join(', ')+'.');
+    }
+    const out=head.concat([''],body);
+    const sn=document.getElementById('sess-note');
+    if(sn&&sn.value.trim()){out.push('','Session \u2014 '+sn.value.trim());n++;}
+    return {text:out.join('\n'),n:n};
+  }
+
+  let tEl=null,tT=null;
+  function toast(msg){
+    if(!tEl){tEl=document.createElement('div');tEl.className='toast';tEl.setAttribute('role','status');document.body.appendChild(tEl);}
+    tEl.textContent=msg;tEl.classList.add('on');
+    clearTimeout(tT);tT=setTimeout(()=>tEl.classList.remove('on'),1800);
+  }
+  function fallback(txt){
+    const ta=document.createElement('textarea');
+    ta.value=txt;ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';
+    document.body.appendChild(ta);ta.select();
+    try{ta.setSelectionRange(0,txt.length);}catch(e){}
+    let ok=false;try{ok=document.execCommand('copy');}catch(e){}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  const copyBtn=document.getElementById('log-copy');
+  if(copyBtn)copyBtn.addEventListener('click',()=>{
+    const r=build();
+    if(!r.n){toast('Nothing logged yet');return;}
+    if(navigator.clipboard&&window.isSecureContext){
+      navigator.clipboard.writeText(r.text).then(()=>toast('Session log copied'),
+        ()=>toast(fallback(r.text)?'Session log copied':'Copy failed \u2014 select the text manually'));
+    }else{
+      toast(fallback(r.text)?'Session log copied':'Copy failed \u2014 select the text manually');
+    }
+  });
+  const clr=document.getElementById('log-reset');
+  if(clr)clr.addEventListener('click',()=>{
+    if(!window.confirm('Clear all logged reps, loads, RIR and notes for this session?'))return;
+    fields.forEach(f=>{f.value='';store.set(f.dataset.k,'');});
+    groups.forEach(g=>{
+      g.querySelectorAll('.rir').forEach(x=>{x.classList.remove('on');x.setAttribute('aria-pressed','false');});
+      store.set(g.dataset.k+'-rir','');
+    });
+    if(typeof window.__resetOrder==='function')window.__resetOrder();
+    toast('Log cleared');
+  });
+  window.__buildLog=build;
+})();
+
 </script>
 </body>
 </html>
